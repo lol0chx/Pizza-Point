@@ -1,4 +1,4 @@
-package core;
+package com.PizzaPoint.orders;
 
 public class PriceCalculator {
 }
