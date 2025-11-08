@@ -1,4 +1,6 @@
 package core.interfaces;
 
-public interface Customizable {
+public interface Customizable<T> {
+    void addItem(T item);
+    void removeItem(T item);
 }
