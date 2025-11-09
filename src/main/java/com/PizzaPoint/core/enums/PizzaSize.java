@@ -1,8 +1,8 @@
 package com.PizzaPoint.core.enums;
 
-import com.PizzaPoint.core.interfaces.CustomOption;
 
-public enum PizzaSize implements CustomOption {
+
+public enum PizzaSize {
     //define all pizza sizes
     SMALL(8),
     MEDIUM(12),
