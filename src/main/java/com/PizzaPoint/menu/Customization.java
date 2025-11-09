@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Customization<T> {
-    private List<T> options = new ArrayList<>();
+    private List<T> options;
 
     public Customization(List<T> options) {
-        this.options = options;
+        this.options = new ArrayList<>();
+    }
+
+    public Customization() {
+
     }
 
     // use this for any option topping, size, crust type or any
@@ -16,8 +20,13 @@ public class Customization<T> {
             options.add(option);
         }
     }
+    //to remove any option
+    public void remove(T option) {
+        options.remove(option);
+    }
+
     // get a copy of all the options
-    public List<T> getall() {
+    public List<T> getAll() {
         return List.copyOf(options);
     }
 

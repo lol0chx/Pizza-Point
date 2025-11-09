@@ -9,42 +9,55 @@ import java.util.List;
 
 public class PizzaCustomization {
     // this handles all the customization for pizza
-    private PizzaSize size;
-    private CrustType crust;
-    private List<Topping> toppings = new ArrayList<>();
 
+    // Use generic Customization class for reusable logic
+    private Customization<Topping> toppings = new Customization<>();
+    private Customization<PizzaSize> size = new Customization<>();
+    private Customization<CrustType> crust = new Customization<>();
 
-    //we set size and crust on pizza not here
+    // Constructor
     public PizzaCustomization() {
-        this.toppings = toppings;
+        // Nothing else needed; toppings/size/crust already initialized
     }
 
-    public PizzaSize getSize() {
-        return size;
-    }
-
-    public void setSize(PizzaSize size) {
-        this.size = size;
-    }
-
-    public CrustType getCrust() {
-        return crust;
-    }
-
-    public void setCrust(CrustType crust) {
-        this.crust = crust;
-    }
+    // --- Toppings ---
     public void addTopping(Topping topping) {
-        if (!toppings.contains(topping)) {
-            toppings.add(topping);
-        }
+        toppings.add(topping);
     }
+
     public void removeTopping(Topping topping) {
         toppings.remove(topping);
     }
-    // Display current customization
-    public String display() {
-        return "Size: " + size + ", Crust: " + crust + ", Toppings: " + toppings;
+
+    public Customization<Topping> getToppings() {
+        return toppings;
     }
 
+    // --- Size ---
+    public void setSize(PizzaSize pizzaSize) {
+        size.add(pizzaSize); // Only one size should be added in practice
+    }
+
+    public Customization<PizzaSize> getSize() {
+        return size;
+    }
+
+    // --- Crust ---
+    public void setCrust(CrustType crustType) {
+        crust.add(crustType); // Only one crust should be added in practice
+    }
+
+    public Customization<CrustType> getCrust() {
+        return crust;
+    }
+
+    // Display current customization
+    public String display() {
+        String sizeDisplay = size.getAll().isEmpty() ? "Not set" : size.getAll().get(0).toString();
+        String crustDisplay = crust.getAll().isEmpty() ? "Not set" : crust.getAll().get(0).toString();
+
+        return "Size: " + sizeDisplay
+                + ", Crust: " + crustDisplay
+                + ", Toppings: " + toppings.display();
+    }
 }
