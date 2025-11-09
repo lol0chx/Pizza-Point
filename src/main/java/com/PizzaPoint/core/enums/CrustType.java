@@ -1,6 +1,8 @@
 package com.PizzaPoint.core.enums;
 
-public enum CrustType {
+import com.PizzaPoint.core.interfaces.CustomOption;
+
+public enum CrustType implements CustomOption {
     THIN,
     REGULAR,
     THICK,

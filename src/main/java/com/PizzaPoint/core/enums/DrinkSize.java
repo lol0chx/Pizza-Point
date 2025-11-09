@@ -1,6 +1,8 @@
 package com.PizzaPoint.core.enums;
 
-public enum DrinkSize {
+import com.PizzaPoint.core.interfaces.CustomOption;
+
+public enum DrinkSize implements CustomOption {
     SMALL,
     MEDIUM,
     LARGE,
