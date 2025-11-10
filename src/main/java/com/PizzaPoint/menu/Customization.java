@@ -18,7 +18,7 @@ public class Customization<T> {
 
     //allow specifying single choice for things like crust and size
     public Customization( boolean singleChoice) {
-     this.singleChoice = false;
+     this.singleChoice = singleChoice;
     }
 
 
