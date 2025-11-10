@@ -3,11 +3,11 @@ package com.PizzaPoint.menu;
 
 public abstract class MenuItem {
     private String Name;
-    private double price;
+    private double basePrice;
 
     public MenuItem(String name, double price) {
         Name = name;
-        this.price = price;
+        this.basePrice = price;
     }
 
     public String getName() {
@@ -19,11 +19,11 @@ public abstract class MenuItem {
     }
 
     public double getPrice() {
-        return price;
+        return basePrice;
     }
 
     public void setPrice(double price) {
-        this.price = price;
+        this.basePrice = price;
     }
 
 }

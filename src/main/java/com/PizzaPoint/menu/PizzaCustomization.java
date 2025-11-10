@@ -12,15 +12,16 @@ public class PizzaCustomization {
 
     // Use generic Customization class for reusable logic
     private Customization<Topping> toppings = new Customization<>();
-    private Customization<PizzaSize> size = new Customization<>();
-    private Customization<CrustType> crust = new Customization<>();
+    //single choice is true so it replaces the choice instead
+    private Customization<PizzaSize> size = new Customization<>(true);
+    private Customization<CrustType> crust = new Customization<>(true);
 
     // Constructor
     public PizzaCustomization() {
         // Nothing else needed; toppings/size/crust already initialized
     }
 
-    // --- Toppings ---
+    // counts extra using map in customization
     public void addTopping(Topping topping) {
         toppings.add(topping);
     }
@@ -33,31 +34,30 @@ public class PizzaCustomization {
         return toppings;
     }
 
-    // --- Size ---
+
     public void setSize(PizzaSize pizzaSize) {
-        size.add(pizzaSize); // Only one size should be added in practice
+        size.add(pizzaSize);
     }
 
-    public Customization<PizzaSize> getSize() {
-        return size;
+    public PizzaSize getSize() {
+        return size.getAll().keySet().stream().findFirst().orElse(null);
     }
 
-    // --- Crust ---
+    // -
     public void setCrust(CrustType crustType) {
-        crust.add(crustType); // Only one crust should be added in practice
+        crust.add(crustType); // Only one crust should be added
     }
 
-    public Customization<CrustType> getCrust() {
-        return crust;
+    public CrustType getCrust() {
+        return crust.getAll().keySet().stream().findFirst().orElse(null);
     }
 
     // Display current customization
-    public String display() {
-        String sizeDisplay = size.getAll().isEmpty() ? "Not set" : size.getAll().get(0).toString();
-        String crustDisplay = crust.getAll().isEmpty() ? "Not set" : crust.getAll().get(0).toString();
 
-        return "Size: " + sizeDisplay
-                + ", Crust: " + crustDisplay
-                + ", Toppings: " + toppings.display();
+    public String display() {
+
+        return "Size: " + getSize() +
+                ", Crust: " + getCrust() +
+                ", Toppings: " + toppings.display();
     }
 }
