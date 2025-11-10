@@ -1,12 +1,14 @@
 package com.PizzaPoint.menu;
 
+import com.PizzaPoint.core.interfaces.Customizable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Customization<T> {
+public class Customization<T> implements Customizable<T> {
     private Map<T, Integer> options = new HashMap<>(); // map to track count of option
     private boolean singleChoice;
 
@@ -23,6 +25,7 @@ public class Customization<T> {
 
 
     // use this for any option topping, size, crust type or any
+    @Override
     public void add(T option) {
         if (singleChoice) {
             options.clear();    //replace option if only one is allowed
@@ -33,6 +36,7 @@ public class Customization<T> {
 
     }
     //to remove any option
+    @Override
     public void remove(T option) {
         if (!options.containsKey(option)) return; // if option doesnt exist just leave
         int count = options.get(option); //get count of option
@@ -48,6 +52,16 @@ public class Customization<T> {
     // Get all options and their counts
     public Map<T, Integer> getAll() {
         return Map.copyOf(options);
+    }
+    @Override
+    public void displayCustomization() {
+        if (options.isEmpty()) {
+            System.out.println("None");
+        } else {
+            options.forEach((opt, count) ->
+                    System.out.println(opt + (count > 1 ? " x" + count : ""))
+            );
+        }
     }
 
     // Display options in readable form
