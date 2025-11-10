@@ -14,16 +14,10 @@ public abstract class MenuItem {
         return Name;
     }
 
-    public void setName(String name) {
-        Name = name;
-    }
 
-    public double getPrice() {
+    public double getBasePrice() {
         return basePrice;
     }
 
-    public void setPrice(double price) {
-        this.basePrice = price;
-    }
 
 }
