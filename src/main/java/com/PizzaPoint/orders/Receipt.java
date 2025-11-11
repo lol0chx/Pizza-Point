@@ -26,6 +26,8 @@ public class Receipt {
                         .append(" - Base: $").append(pizza.getBasePrice()).append("\n");
                 receipt.append("Size: ").append(pizza.getSize()).append("\n");
                 receipt.append("Crust: ").append(pizza.getCrust()).append("\n");
+                receipt.append("Base Sauce ").append(pizza.getSauce()).append("\n");
+                receipt.append("Cheese type:").append(pizza.getCheese()).append("\n");
 
                 Map<ToppingOption, Integer> toppings = pizza.getToppingsMap();
                 if (toppings.isEmpty()) {

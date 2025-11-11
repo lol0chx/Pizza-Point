@@ -1,7 +1,9 @@
 package com.PizzaPoint.ui.pizza;
 
+import com.PizzaPoint.core.enums.CheeseType;
 import com.PizzaPoint.core.enums.CrustType;
 import com.PizzaPoint.core.enums.PizzaSize;
+import com.PizzaPoint.core.enums.SauceType;
 import com.PizzaPoint.menu.Pizza;
 import com.PizzaPoint.menu.topping.ToppingMenu;
 import com.PizzaPoint.menu.topping.ToppingOption;
@@ -23,16 +25,40 @@ public class AddPizzaScreen {
         //choose size and crust
         PizzaSize size = chooseSize();
         CrustType crust = chooseCrust();
+        CheeseType cheese = chooseCheese();
+        SauceType sauce = chooseSauce();
 
         List<ToppingOption> toppings = chooseToppings();
 
-        double basePrice = size == PizzaSize.SMALL ? 8.0 :
-                          size == PizzaSize.MEDIUM? 10.0 : 12.0;
-        Pizza pizza = new PizzaBuilder(basePrice, size, crust).build();
+        double basePrice = size.getBasePrice();
+        Pizza pizza = new PizzaBuilder(basePrice, size, crust, sauce, cheese).build();
         new ToppingSelector(pizza).addMultiple(toppings);
         order.addItem(pizza);
         System.out.println("✅ your Pizza is added!");
         System.out.println(pizza.displayCustomization());
+    }
+    private SauceType chooseSauce() {
+        System.out.println("select sauce: 1: Alfredo \n 2: BBQ \n 3: Pesto \n 4:Marinara");
+        int choice = scanner.nextInt();
+        return switch (choice) {
+            case 1 -> SauceType.ALFREDO;
+            case 2 -> SauceType.BBQ;
+            case 3 -> SauceType.PESTO;
+            default -> SauceType.MARINARA;
+        };
+
+    }
+    private CheeseType chooseCheese() {
+        System.out.println("select cheese: 1: Vegan \n 2: Cheddar \n 3: Parmesan \n 4: Mozzarella");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        return switch (choice) {
+            case 1 -> CheeseType.VEGAN;
+            case 2 -> CheeseType.CHEDDAR;
+            case 3 -> CheeseType.PARMESAN;
+            default -> CheeseType.MOZZARELLA;
+        };
+
     }
 
     private PizzaSize chooseSize() {
