@@ -2,8 +2,8 @@ package com.PizzaPoint.core.enums;
 
 
 public enum CrustType {
-    THIN,
     REGULAR,
+    THIN,
     THICK,
     PAN,
     STUFFED

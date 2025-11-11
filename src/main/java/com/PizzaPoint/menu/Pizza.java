@@ -70,7 +70,7 @@ public class Pizza extends MenuItem implements Customizable<ToppingOption>, Orde
 
     @Override
     public double calculatePrice() {
-        return PriceCalculator.calculateItemPrice(this);
+        return getBasePrice() ;
     }
 
 
