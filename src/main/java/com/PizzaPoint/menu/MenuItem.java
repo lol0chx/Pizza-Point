@@ -2,16 +2,17 @@ package com.PizzaPoint.menu;
 
 
 public abstract class MenuItem {
-    private String Name;
+    private String name;
     private double basePrice;
 
-    public MenuItem(String name, double price) {
-        Name = name;
-        this.basePrice = price;
+    public MenuItem (String name ,double basePrice) {
+        this.name = name;
+        this.basePrice = basePrice;
+
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
 

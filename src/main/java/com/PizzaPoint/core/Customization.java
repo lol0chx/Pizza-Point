@@ -1,10 +1,8 @@
-package com.PizzaPoint.menu;
+package com.PizzaPoint.core;
 
 import com.PizzaPoint.core.interfaces.Customizable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -15,12 +13,14 @@ public class Customization<T> implements Customizable<T> {
 
     // default is false for toppings or other like topping
     public Customization() {
+
         this(false);
     }
 
     //allow specifying single choice for things like crust and size
     public Customization( boolean singleChoice) {
-     this.singleChoice = singleChoice;
+
+        this.singleChoice = singleChoice;
     }
 
 
@@ -73,13 +73,10 @@ public class Customization<T> implements Customizable<T> {
                 .collect(Collectors.joining(", "));
     }
 
-
     //to clear all options applied
     public void clear() {
         options.clear();
     }
 
 
-
-    // get first option
 }

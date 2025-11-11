@@ -1,72 +1,67 @@
 package com.PizzaPoint.menu;
 
+import com.PizzaPoint.core.Customization;
 import com.PizzaPoint.core.enums.CrustType;
 import com.PizzaPoint.core.enums.PizzaSize;
 import com.PizzaPoint.core.interfaces.Customizable;
 import com.PizzaPoint.core.interfaces.Orderable;
-import com.PizzaPoint.menu.toppings.Topping;
+import com.PizzaPoint.menu.topping.ToppingOption;
 import com.PizzaPoint.orders.PriceCalculator;
 
-public class Pizza extends MenuItem implements Orderable, Customizable {
+public class Pizza extends MenuItem implements Customizable<ToppingOption>, Orderable {
 
-    private PizzaCustomization pizzaCustomization;
+    private final Customization<ToppingOption> toppings = new Customization<>();
+    //single choice is true one choice is allowed so it replaces the choice instead
+    private  final Customization<PizzaSize> size = new Customization<>(true);
+    private final Customization<CrustType> crust = new Customization<>(true);
 
-    public Pizza(String name, double price, PizzaCustomization customization) {
+    //all pizza should start with name price and inttialsize and crust
+    public Pizza(double price, PizzaSize initialSize, CrustType initialCrust ) {
+        this("Custom Pizza ", price, initialSize,initialCrust);
+    }
+    //for preset pizza
+    public Pizza(String name, double price, PizzaSize initialSize, CrustType initialCrust ) {
         super(name, price);
-        this.pizzaCustomization = new PizzaCustomization();
-    }
-    //get the customization object for this pizza.
-    public PizzaCustomization getCustomization() {
-        return pizzaCustomization;
-    }
-
-   //will track using the map
-    public void addTopping(Topping topping) {
-        pizzaCustomization.addTopping(topping);
-    }
-
-    public void removeTopping(Topping topping) {
-        pizzaCustomization.removeTopping(topping);
+        size.add(initialSize);
+        crust.add(initialCrust);
     }
 
 
-     // Get all current toppings on this pizza
-    public Customization<Topping> getToppings() {
-        return pizzaCustomization.getToppings();
+    //clears old size because we can only have one size and crust
+    public void setSize(PizzaSize newSize) {
+        size.clear();
+        size.add(newSize);
     }
-
-
-
-    public void setSize(PizzaSize size) {
-        pizzaCustomization.setSize(size);
+    public void setCrust(CrustType newCrust) {
+        crust.clear();
+        crust.add(newCrust);
     }
-    public void setCrust(CrustType crust) {
-        pizzaCustomization.setCrust(crust);
-    }
-
-    //Get the pizza's current size.
-    public PizzaSize getSize() {
-        return pizzaCustomization.getSize();
-    }
-    //get the crust type
     public CrustType getCrust() {
-        return pizzaCustomization.getCrust();
+        return crust.getAll().keySet().stream().findFirst().orElse(null);
     }
-
+    public PizzaSize getSize() {
+        return size.getAll().keySet().stream().findFirst().orElse(null);
+    }
+    @Override
+    public void add(ToppingOption topping) {
+        toppings.add(topping);
+    }
+    @Override
+    public void remove(ToppingOption topping) {
+        toppings.remove(topping);
+    }
+    @Override
+    public String displayCustomization() {
+        return "🍕 Pizza Customization:\n" +
+                " - Size: " + size.display() + "\n" +
+                " - Crust: " + crust.display() + "\n" +
+                " - Toppings: " + toppings.display();
+    }
 
     @Override
     public double calculatePrice() {
         return PriceCalculator.calculatePrice(this);
     }
 
-    @Override
-    public void displayCustomization() {
-       pizzaCustomization.display();
-    }
 
-     //Print the details for reciept
-    @Override
-    public String toString() {
-        return getName() + " - " + pizzaCustomization.display() + " | Total: $" + calculatePrice();
-    }
 }

@@ -1,4 +1,5 @@
 package com.PizzaPoint.menu;
+import com.PizzaPoint.core.Customization;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 class CustomizationTest {
