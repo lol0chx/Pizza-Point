@@ -1,5 +1,6 @@
 package com.PizzaPoint.orders;
 
+import com.PizzaPoint.core.enums.CrustType;
 import com.PizzaPoint.core.interfaces.Orderable;
 import com.PizzaPoint.menu.Pizza;
 import com.PizzaPoint.menu.topping.ToppingOption;
@@ -22,12 +23,11 @@ public class Receipt {
         List<Orderable> items = order.getItems();
         for (Orderable item : items) {
             if (item instanceof Pizza pizza) {
-                receipt.append(pizza.getName())
-                        .append(" - Base: $").append(pizza.getBasePrice()).append("\n");
-                receipt.append("Size: ").append(pizza.getSize()).append("\n");
-                receipt.append("Crust: ").append(pizza.getCrust()).append("\n");
-                receipt.append("Base Sauce ").append(pizza.getSauce()).append("\n");
-                receipt.append("Cheese type:").append(pizza.getCheese()).append("\n");
+                receipt.append(pizza.getName());
+                receipt.append("\nSize: ").append(pizza.getSize()).append(" $").append(pizza.getBasePrice()).append("\n");
+                receipt.append("Crust: ").append(pizza.getCrust()).append(" $").append(CrustType.STUFFED.getExtraCost()).append("\n");
+                receipt.append("Base Sauce: ").append(pizza.getSauce()).append("\n");
+                receipt.append("Cheese type: ").append(pizza.getCheese()).append("\n");
 
                 Map<ToppingOption, Integer> toppings = pizza.getToppingsMap();
                 if (toppings.isEmpty()) {
@@ -35,10 +35,12 @@ public class Receipt {
                 } else {
                     receipt.append("Toppings: ");
                     toppings.forEach((topping, count) -> {
-                        receipt.append(topping.getName());
+                        receipt.append(topping.getName())
+                                .append(" ($").append(String.format("%.2f", topping.getPrice())).append(")");
                         if (count > 1) receipt.append(" x").append(count);
                         receipt.append(", ");
                     });
+
                     // Remove last comma
                     receipt.setLength(receipt.length() - 2);
                     receipt.append("\n");
@@ -49,15 +51,15 @@ public class Receipt {
             // Later: handle drinks, desserts, etc.
         }
 
-        double total = PriceCalculator.calculateTotal(items);
-        receipt.append("------------------\n");
-        receipt.append("Total: $").append(total).append("\n");
+    double total = PriceCalculator.calculateTotal(items);
+    receipt.append("------------------\n");
+    receipt.append("Total: $").append(String.format("%.2f", total)).append("\n");
 
         return receipt.toString();
     }
     public void saveToFile(String filename) {
         String content = generate();
-        try (FileWriter writer = new FileWriter(filename)) {
+        try (FileWriter writer = new FileWriter("receipts/" + filename)) {
             writer.write(content);
             System.out.println("Receipt saved to " + filename);
         } catch (IOException e) {

@@ -1,14 +1,17 @@
 package com.PizzaPoint.menu.topping;
 
+import com.PizzaPoint.core.enums.ToppingCategory;
+
 public class ToppingOption {
     private final String name;
     private final double price;
-    private final boolean isBase;//true for base toppings
+    private final ToppingCategory category;
 
-    public ToppingOption(String name, double price, boolean isBase) {
+    public ToppingOption(String name, double price, ToppingCategory category) {
         this.name = name;
         this.price = price;
-        this.isBase = isBase;
+        this.category = category;
+
     }
 
     public String getName() {
@@ -19,14 +22,14 @@ public class ToppingOption {
     public double getPrice() {
         return price;
     }
-
-    public boolean isBase() {
-        return isBase;
+    public ToppingCategory getCategory() {
+        return category;
     }
+
 
     @Override
     public String toString() {
 
-        return name + (isBase ? " (base)" : "") + (price > 0 ? " ($" + price + " extra)" : "");
+        return name + (price > 0 ? " ($" + price + " extra)" : "");
     }
 }

@@ -1,9 +1,6 @@
 package com.PizzaPoint.ui.pizza;
 
-import com.PizzaPoint.core.enums.CheeseType;
-import com.PizzaPoint.core.enums.CrustType;
-import com.PizzaPoint.core.enums.PizzaSize;
-import com.PizzaPoint.core.enums.SauceType;
+import com.PizzaPoint.core.enums.*;
 import com.PizzaPoint.menu.Pizza;
 import com.PizzaPoint.menu.topping.ToppingMenu;
 import com.PizzaPoint.menu.topping.ToppingOption;
@@ -37,8 +34,15 @@ public class AddPizzaScreen {
         System.out.println("✅ your Pizza is added!");
         System.out.println(pizza.displayCustomization());
     }
+
     private SauceType chooseSauce() {
-        System.out.println("select sauce: 1: Alfredo \n 2: BBQ \n 3: Pesto \n 4:Marinara");
+        System.out.println("""
+                select Sauce:
+                1: Alfredo
+                2: BBQ
+                3: Pesto
+                4: Marinara
+                """);
         int choice = scanner.nextInt();
         return switch (choice) {
             case 1 -> SauceType.ALFREDO;
@@ -48,8 +52,15 @@ public class AddPizzaScreen {
         };
 
     }
+
     private CheeseType chooseCheese() {
-        System.out.println("select cheese: 1: Vegan \n 2: Cheddar \n 3: Parmesan \n 4: Mozzarella");
+        System.out.println("""
+                select Cheese:
+                1: Vegan
+                2: Cheddar
+                3: Parmesan
+                4: Mozzarella
+                """);
         int choice = scanner.nextInt();
         scanner.nextLine();
         return switch (choice) {
@@ -62,7 +73,12 @@ public class AddPizzaScreen {
     }
 
     private PizzaSize chooseSize() {
-        System.out.println("select size: 1:Small \n 2: Medium \n 3:Large");
+        System.out.println("""
+                select size:
+                1: Small
+                2: Medium
+                3: Large
+                """);
         int choice = scanner.nextInt();
         scanner.nextLine();
         return switch (choice) {
@@ -71,8 +87,16 @@ public class AddPizzaScreen {
             default -> PizzaSize.LARGE;
         };
     }
+
     private CrustType chooseCrust() {
-        System.out.println("select Crust: 1:Stuffed Crust \n 2:Thin Crust \n 3:Thick Crust \n4:Pan Crust \n5:Regular Crust");
+        System.out.printf("""
+                Select Crust:
+                1: Stuffed Crust ($%.2f more)
+                2: Thin Crust
+                3: Thick Crust
+                4: Pan Crust
+                5: Regular Crust
+                """, CrustType.STUFFED.getExtraCost());
         int choice = scanner.nextInt();
         scanner.nextLine();
         return switch (choice) {
@@ -83,26 +107,46 @@ public class AddPizzaScreen {
             default -> CrustType.REGULAR;
         };
     }
+
     private List<ToppingOption> chooseToppings() {
         List<ToppingOption> selected = new ArrayList<>();
         List<ToppingOption> allToppings = new ArrayList<>(ToppingMenu.getAllToppings().values());
+        System.out.println("Do you want toppings? 1. Yes  0. No");
+        int wantTopping = scanner.nextInt();
+        scanner.nextLine();
+        if (wantTopping == 0) return selected;
         boolean done = false;
         while (!done) {
-            System.out.println("Available Toppings");
-            for (int i =0; i < allToppings.size(); i++) {
-                ToppingOption t = allToppings.get(i);
-                System.out.printf("%d %s $.2f $s\n", i + 1, t.getName(), t.getPrice(), t.isBase() ? "included" : "");
-            }
-            System.out.println("0) Done");
-
-            int choice = scanner.nextInt();
+            System.out.println("Choose topping type: 1. Veg  2. Meat  0. Done");
+            int typeChoice = scanner.nextInt();
             scanner.nextLine();
-            if (choice == 0) done = true;
-            else if (choice > 0 && choice <= allToppings.size()) {
-                selected.add(allToppings.get(choice - 1));
-                System.out.println(allToppings.get(choice -1).getName() + " added");
-            } else System.out.println("Invalid choice");
+            if (typeChoice == 0) done = true;
+            ToppingCategory selectedCategory = (typeChoice == 1) ? ToppingCategory.VEG : ToppingCategory.MEAT;
+            List<ToppingOption> filtered = allToppings.stream()
+                    .filter(t -> t.getCategory() == selectedCategory)
+                    .toList();
+            boolean categoryDone = false;
+            while (!categoryDone) {
+                System.out.println("Available " + selectedCategory + " toppings:");
+                for (int i = 0; i < filtered.size(); i++) {
+                    ToppingOption t = filtered.get(i);
+                    System.out.printf("%d: %s $%.2f\n", i + 1, t.getName(), t.getPrice());
+                }
+                System.out.println("0) Done with this category");
+                int toppingChoice = scanner.nextInt();
+                scanner.nextLine();
+                if (toppingChoice == 0) categoryDone = true;
+                else if (toppingChoice > 0 && toppingChoice <= filtered.size()) {
+                    selected.add(filtered.get(toppingChoice - 1));
+                    System.out.println(filtered.get(toppingChoice - 1).getName() + " added");
+                } else {
+                    System.out.println("Invalid choice");
+                }
+            }
+
+
         }
         return selected;
     }
 }
+
