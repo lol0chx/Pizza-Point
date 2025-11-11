@@ -54,14 +54,20 @@ public class Customization<T> implements Customizable<T> {
         return Map.copyOf(options);
     }
     @Override
-    public void displayCustomization() {
+    public String displayCustomization() {
+        StringBuilder result = new StringBuilder();
+
         if (options.isEmpty()) {
-            System.out.println("None");
+            result.append("None\n");
         } else {
             options.forEach((opt, count) ->
-                    System.out.println(opt + (count > 1 ? " x" + count : ""))
+                    result.append(opt)
+                            .append(count > 1 ? " x" + count : "")
+                            .append("\n")
             );
         }
+
+        return result.toString();
     }
 
     // Display options in readable form

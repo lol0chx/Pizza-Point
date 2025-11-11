@@ -8,6 +8,8 @@ import com.PizzaPoint.core.interfaces.Orderable;
 import com.PizzaPoint.menu.topping.ToppingOption;
 import com.PizzaPoint.orders.PriceCalculator;
 
+import java.util.Map;
+
 public class Pizza extends MenuItem implements Customizable<ToppingOption>, Orderable {
 
     private final Customization<ToppingOption> toppings = new Customization<>();
@@ -42,6 +44,14 @@ public class Pizza extends MenuItem implements Customizable<ToppingOption>, Orde
     public PizzaSize getSize() {
         return size.getAll().keySet().stream().findFirst().orElse(null);
     }
+    // getAll() returns an unmodifiable copy for receipt
+    public Map<ToppingOption, Integer> getToppingsMap() {
+        return toppings.getAll();
+    }
+    // use for calculation
+    public Customization<ToppingOption> getToppings() {
+        return toppings;
+    }
     @Override
     public void add(ToppingOption topping) {
         toppings.add(topping);
@@ -60,7 +70,7 @@ public class Pizza extends MenuItem implements Customizable<ToppingOption>, Orde
 
     @Override
     public double calculatePrice() {
-        return PriceCalculator.calculatePrice(this);
+        return PriceCalculator.calculateItemPrice(this);
     }
 
 
