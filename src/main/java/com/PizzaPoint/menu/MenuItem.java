@@ -1,7 +1,9 @@
 package com.PizzaPoint.menu;
 
 
-public abstract class MenuItem {
+import com.PizzaPoint.core.interfaces.Orderable;
+
+public abstract class MenuItem  implements Orderable {
     private String name;
     private double basePrice;
 

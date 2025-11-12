@@ -1,11 +1,13 @@
 package com.PizzaPoint.ui.pizza;
 
 import com.PizzaPoint.core.enums.*;
-import com.PizzaPoint.menu.Pizza;
-import com.PizzaPoint.menu.topping.ToppingMenu;
-import com.PizzaPoint.menu.topping.ToppingOption;
+import com.PizzaPoint.menu.pizza.Pizza;
+import com.PizzaPoint.menu.pizza.topping.ToppingMenu;
+import com.PizzaPoint.menu.pizza.topping.ToppingOption;
+import com.PizzaPoint.menu.pizza.topping.ToppingSelector;
 import com.PizzaPoint.orders.Order;
 import com.PizzaPoint.util.InputHandler;
+import com.PizzaPoint.menu.pizza.PizzaBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.Scanner;
 
 public class AddPizzaScreen {
     private final Order order;
+    //declare outside to use on methods so i can display price of topping based on size
+    PizzaSize size;
     private final Scanner scanner = new Scanner(System.in);
 
     public AddPizzaScreen(Order order) {
@@ -22,7 +26,7 @@ public class AddPizzaScreen {
     public void start() {
         System.out.println("🍕 Build your pizza!");
         //choose size and crust
-        PizzaSize size = chooseSize();
+        size = chooseSize();
         CrustType crust = chooseCrust();
         SauceType sauce = chooseSauce();
         CheeseType cheese = chooseCheese();
@@ -127,10 +131,10 @@ public class AddPizzaScreen {
                 System.out.println("Available " + selectedCategory + " toppings:");
                 for (int i = 0; i < filtered.size(); i++) {
                     ToppingOption t = filtered.get(i);
-                    System.out.printf("%d: %s $%.2f\n", i + 1, t.getName(), t.getPrice());
+                    System.out.printf("%d: %s $%.2f\n", i + 1, t.getName(), (t.getPrice() * size.getToppingMultiplier()));
                 }
                 System.out.println("0) Done with this category");
-                int toppingChoice = InputHandler.getIntInput("Your choice: ", 1, filtered.size());
+                int toppingChoice = InputHandler.getIntInput("Your choice: ", 0, filtered.size());
                 if (toppingChoice == 0) categoryDone = true;
                 else if (toppingChoice > 0 && toppingChoice <= filtered.size()) {
                     selected.add(filtered.get(toppingChoice - 1));

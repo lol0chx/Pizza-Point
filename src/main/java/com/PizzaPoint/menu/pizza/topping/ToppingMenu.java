@@ -1,4 +1,4 @@
-package com.PizzaPoint.menu.topping;
+package com.PizzaPoint.menu.pizza.topping;
 
 import com.PizzaPoint.core.enums.ToppingCategory;
 

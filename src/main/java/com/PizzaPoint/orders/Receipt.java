@@ -1,9 +1,10 @@
 package com.PizzaPoint.orders;
 
-import com.PizzaPoint.core.enums.CrustType;
+import com.PizzaPoint.core.enums.PizzaSize;
 import com.PizzaPoint.core.interfaces.Orderable;
-import com.PizzaPoint.menu.Pizza;
-import com.PizzaPoint.menu.topping.ToppingOption;
+import com.PizzaPoint.menu.pizza.Pizza;
+import com.PizzaPoint.menu.pizza.topping.ToppingOption;
+import com.PizzaPoint.util.PriceCalculator;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class Receipt {
                     receipt.append("Toppings: ");
                     toppings.forEach((topping, count) -> {
                         receipt.append(topping.getName())
-                                .append(" ($").append(String.format("%.2f", topping.getPrice())).append(")");
+                                .append(" ($").append(String.format("%.2f", (topping.getPrice() * pizza.getSize().getToppingMultiplier()) )).append(")");
                         if (count > 1) receipt.append(" x").append(count);
                         receipt.append(", ");
                     });
@@ -49,14 +50,14 @@ public class Receipt {
                     receipt.append("\n");
                 }
 
-                receipt.append("Subtotal: $").append(String.format("%.2f", pizza.calculatePrice())).append("\n\n");
+                receipt.append("Subtotal: $").append(String.format("%.2f", pizza.calculatePrice()  )).append("\n\n");
             }
             // Later: handle drinks, desserts, etc.
         }
 
-    double total = PriceCalculator.calculateTotal(items);
-    receipt.append("------------------\n");
-    receipt.append("Total: $").append(String.format("%.2f", total)).append("\n");
+        double total = PriceCalculator.calculateTotal(items);
+        receipt.append("------------------\n");
+        receipt.append("Total: $").append(String.format("%.2f", total)).append("\n");
 
         return receipt.toString();
     }

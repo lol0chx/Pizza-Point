@@ -1,7 +1,6 @@
-package com.PizzaPoint.ui.pizza;
+package com.PizzaPoint.menu.pizza.topping;
 
-import com.PizzaPoint.menu.Pizza;
-import com.PizzaPoint.menu.topping.ToppingOption;
+import com.PizzaPoint.menu.pizza.Pizza;
 
 import java.util.List;
 

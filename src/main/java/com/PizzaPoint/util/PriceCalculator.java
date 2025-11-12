@@ -1,7 +1,6 @@
-package com.PizzaPoint.orders;
+package com.PizzaPoint.util;
 
 import com.PizzaPoint.core.interfaces.Orderable;
-import com.PizzaPoint.menu.Pizza;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.PizzaPoint.menu;
+package com.PizzaPoint.menu.pizza;
 
 import com.PizzaPoint.core.Customization;
 import com.PizzaPoint.core.enums.CheeseType;
@@ -7,12 +7,12 @@ import com.PizzaPoint.core.enums.PizzaSize;
 import com.PizzaPoint.core.enums.SauceType;
 import com.PizzaPoint.core.interfaces.Customizable;
 import com.PizzaPoint.core.interfaces.Orderable;
-import com.PizzaPoint.menu.topping.ToppingOption;
-import com.PizzaPoint.orders.PriceCalculator;
+import com.PizzaPoint.menu.MenuItem;
+import com.PizzaPoint.menu.pizza.topping.ToppingOption;
 
 import java.util.Map;
 
-public class Pizza extends MenuItem implements Customizable<ToppingOption>, Orderable {
+public class Pizza extends MenuItem implements Customizable<ToppingOption> {
 
     private final Customization<ToppingOption> toppings = new Customization<>();
     //single choice is true one choice is allowed so it replaces the choice instead
@@ -20,6 +20,8 @@ public class Pizza extends MenuItem implements Customizable<ToppingOption>, Orde
     private final Customization<CrustType> crust = new Customization<>(true);
     private final Customization<CheeseType> cheese = new Customization<>(true);
     private final Customization<SauceType> sauce = new Customization<>(true);
+
+
 
     //all pizza should start with name price and inttialsize and crust
     public Pizza(double price, PizzaSize initialSize, CrustType initialCrust, SauceType initialSauce, CheeseType initialCheese ) {
@@ -84,30 +86,41 @@ public class Pizza extends MenuItem implements Customizable<ToppingOption>, Orde
     }
     @Override
     public String displayCustomization() {
+        PizzaSize currentSize = getSize();
+
         return "🍕 Pizza Customization:\n" +
                 " - Size: " + size.display() + "\n" +
                 " - Crust: " + crust.display() + "\n" +
-                " - Toppings: " + toppings.display();
+                " - Toppings: " + toppings.display()  + "whyyyy" + getToppingMultiplier(currentSize);
     }
 
     @Override
     public double calculatePrice() {
-
         double price = 0.0;
-        PizzaSize size = getSize();
-        CrustType crust = getCrust();
-        if (size != null) {
-            price += size.getBasePrice();
+        PizzaSize currentSize = getSize();
+        CrustType currentCrust = getCrust();
+        if (currentSize != null) {
+            price += currentSize.getBasePrice();
         }
-        if (crust != null) {
-            price += crust.getExtraCost();
+        if (currentCrust != null) {
+            price += currentCrust.getExtraCost();
         }
-        // Add topping costs
         for (Map.Entry<ToppingOption, Integer> entry : getToppingsMap().entrySet()) {
-            price += entry.getKey().getPrice() * entry.getValue();
+            double toppingBase = entry.getKey().getPrice();
+            double multiplier = getToppingMultiplier(currentSize);
+            price += toppingBase * multiplier * entry.getValue();
         }
         return price;
     }
 
-
+    private double getToppingMultiplier(PizzaSize size) {
+        if (size == null) {
+            return 1.0;
+        }
+        return switch (size) {
+            case SMALL -> 1.0;
+            case MEDIUM -> 1.5;
+            case LARGE -> 2.0;
+        };
+    }
 }

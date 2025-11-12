@@ -1,22 +1,21 @@
-package com.PizzaPoint.ui.pizza;
+package com.PizzaPoint.menu.pizza;
 
 import com.PizzaPoint.core.enums.CheeseType;
 import com.PizzaPoint.core.enums.CrustType;
 import com.PizzaPoint.core.enums.PizzaSize;
 import com.PizzaPoint.core.enums.SauceType;
-import com.PizzaPoint.menu.Pizza;
 
 public class PizzaBuilder {
     private final Pizza pizza;
 
-    //name is custom pizza by default
-    public PizzaBuilder (double basePrice, PizzaSize size, CrustType crust, SauceType sauce, CheeseType cheese) {
+    // name is custom pizza by default
+    public PizzaBuilder(double basePrice, PizzaSize size, CrustType crust, SauceType sauce, CheeseType cheese) {
         pizza = new Pizza(basePrice, size, crust, sauce, cheese);
     }
 
     public PizzaBuilder setSize(PizzaSize size) {
         pizza.setSize(size);
-        return  this;
+        return this;
     }
 
     public PizzaBuilder setCrust(CrustType crust) {
@@ -28,3 +27,4 @@ public class PizzaBuilder {
         return pizza;
     }
 }
+
