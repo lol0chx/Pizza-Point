@@ -25,7 +25,10 @@ public class Receipt {
             if (item instanceof Pizza pizza) {
                 receipt.append(pizza.getName());
                 receipt.append("\nSize: ").append(pizza.getSize()).append(" $").append(pizza.getBasePrice()).append("\n");
-                receipt.append("Crust: ").append(pizza.getCrust()).append(" $").append(CrustType.STUFFED.getExtraCost()).append("\n");
+                receipt.append("Crust: ").append(pizza.getCrust());
+                if (pizza.getCrust().getExtraCost() > 0) {
+                    receipt.append(String.format(" (+$%.2f)", pizza.getCrust().getExtraCost()));
+                }
                 receipt.append("Base Sauce: ").append(pizza.getSauce()).append("\n");
                 receipt.append("Cheese type: ").append(pizza.getCheese()).append("\n");
 
@@ -46,7 +49,7 @@ public class Receipt {
                     receipt.append("\n");
                 }
 
-                receipt.append("Subtotal: $").append(pizza.calculatePrice()).append("\n\n");
+                receipt.append("Subtotal: $").append(String.format("%.2f", pizza.calculatePrice())).append("\n\n");
             }
             // Later: handle drinks, desserts, etc.
         }
