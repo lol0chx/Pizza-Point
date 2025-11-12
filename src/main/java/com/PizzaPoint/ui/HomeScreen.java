@@ -45,9 +45,10 @@ public class HomeScreen {
                 case 2 -> new AddDrinkScreen(order).start();
                 case 3 -> System.out.println(new Receipt(order).generate());
                 case 4 -> {
-                    System.out.println(new Receipt(order).generate());
+                    new CheckOutScreen(order).checkOut();
+                    /* System.out.println(new Receipt(order).generate());
                     order.clear();
-                    ordering = false;
+                    ordering = false;*/
                 }
                 case 0 -> ordering = false;
             }

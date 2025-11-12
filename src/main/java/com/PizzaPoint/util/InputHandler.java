@@ -25,6 +25,9 @@ public class InputHandler {
 
 
 
+
+
+
     // Get a choice from a list of options
     public static <T> T getListInput(String prompt, List<T> options) {
         for (int i = 0; i < options.size(); i++) {
@@ -32,5 +35,18 @@ public class InputHandler {
         }
         int choice = getIntInput(prompt, 1, options.size());
         return options.get(choice - 1);
+    }
+
+    // Get any double input
+    public static double getDoubleInput(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String line = scanner.nextLine().trim();
+            try {
+                return Double.parseDouble(line);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number (e.g., 12.50).");
+            }
+        }
     }
 }

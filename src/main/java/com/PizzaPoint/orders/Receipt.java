@@ -9,11 +9,15 @@ import com.PizzaPoint.util.PriceCalculator;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class Receipt {
     private final Order order;
+    private final List<String> notes = new ArrayList<>();
+
+
 
     public Receipt (Order order) {
         this.order = order;
@@ -65,8 +69,18 @@ public class Receipt {
         double total = PriceCalculator.calculateTotal(items);
         receipt.append("------------------\n");
         receipt.append("Total: $").append(String.format("%.2f", total)).append("\n");
+        if (!notes.isEmpty()) {
+            receipt.append("\nNotes:\n");
+            notes.forEach(entry -> receipt.append("- ").append(entry).append("\n"));
+        }
 
         return receipt.toString();
+    }
+    public void addNote(String note) {
+        if (note == null || note.isBlank()) {
+            return;
+        }
+        notes.add(note);
     }
     public void saveToFile(String filename) {
         String content = generate();
