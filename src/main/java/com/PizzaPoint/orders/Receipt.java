@@ -5,6 +5,7 @@ import com.PizzaPoint.core.interfaces.Orderable;
 import com.PizzaPoint.menu.drink.Drink;
 import com.PizzaPoint.menu.pizza.Pizza;
 import com.PizzaPoint.menu.pizza.topping.ToppingOption;
+import com.PizzaPoint.ui.CheckOutScreen;
 import com.PizzaPoint.util.PriceCalculator;
 
 import java.io.FileWriter;
@@ -15,7 +16,8 @@ import java.util.Map;
 
 public class Receipt {
     private final Order order;
-    private final List<String> notes = new ArrayList<>();
+    String itemName;
+    private static final List<String> notes = new ArrayList<>();
 
 
 
@@ -24,11 +26,21 @@ public class Receipt {
     }
     public String generate() {
         StringBuilder receipt = new StringBuilder();
-        receipt.append("----- Receipt -----\n");
+        receipt.append("--------------------\n");
+       // Add customer name or just set it to guest
+        String customerName = order.getCustomerName();
+
+        if (customerName != null && !customerName.isBlank()) {
+            receipt.append("Date and Time: ").append(CheckOutScreen.getReceiptId());
+            receipt.append("\nCustomer: ").append(customerName).append("\n");
+            receipt.append("--------------------\n");
+        }
+
 
         List<Orderable> items = order.getItems();
         for (Orderable item : items) {
             if (item instanceof Pizza pizza) {
+                itemName = "pizza";
                 receipt.append(pizza.getName());
                 receipt.append("\nSize: ").append(pizza.getSize()).append(" $").append(pizza.getBasePrice()).append("\n");
                 receipt.append("Crust: ").append(pizza.getCrust());
@@ -57,18 +69,26 @@ public class Receipt {
                     receipt.append("\n");
                 }
 
-                receipt.append("Subtotal: $").append(String.format("%.2f", pizza.calculatePrice()  )).append("\n\n");
+                receipt.append(itemName).append(" Total: $").append(String.format("%.2f", pizza.calculatePrice()  )).append("\n\n");
             }
             else if (item instanceof Drink drink) {
-                receipt.append(drink.getName());
-                receipt.append(drink.getSize());
-                receipt.append(drink.calculatePrice());
+                receipt.append(drink.getName()).append(" ");
+                receipt.append(drink.getSize()).append(" ");
+               receipt.append(drink.calculatePrice()).append("\n");
+               // receipt.append(itemName).append("(s) Total: $").append(String.format("%.2f", drink.calculatePrice()  )).append("\n\n");
+                itemName = "Drink";
             }
             // Later: handle drinks, desserts, etc.
         }
         double total = PriceCalculator.calculateTotal(items);
-        receipt.append("------------------\n");
-        receipt.append("Total: $").append(String.format("%.2f", total)).append("\n");
+        receipt.append("\n------------------\n");
+        receipt.append(" Sub Total: $").append(String.format("%.2f", total)).append("\n");
+
+        if(CheckOutScreen.getTendered() > 0) {
+            receipt.append("customer paid Cash: ").append(CheckOutScreen.getTendered());
+            receipt.append("\nChange: ").append(CheckOutScreen.getChange());
+        }
+
         if (!notes.isEmpty()) {
             receipt.append("\nNotes:\n");
             notes.forEach(entry -> receipt.append("- ").append(entry).append("\n"));
@@ -76,7 +96,7 @@ public class Receipt {
 
         return receipt.toString();
     }
-    public void addNote(String note) {
+    public static void addNote(String note) {
         if (note == null || note.isBlank()) {
             return;
         }

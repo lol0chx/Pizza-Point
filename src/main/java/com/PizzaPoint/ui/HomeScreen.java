@@ -29,6 +29,10 @@ public class HomeScreen {
     }
 
     private void runOrder() {
+
+        String orderName = InputHandler.getStringInput("Enter name for the order: ");
+        order.setCustomerName(orderName);
+
         boolean ordering = true;
         while (ordering) {
             System.out.println("""
@@ -43,12 +47,16 @@ public class HomeScreen {
             switch (selection) {
                 case 1 -> new AddPizzaScreen(order).start();
                 case 2 -> new AddDrinkScreen(order).start();
-                case 3 -> System.out.println(new Receipt(order).generate());
+                case 3 -> {
+                    if (order.getItems().isEmpty()) System.out.println("Your order is empty please add to your order");
+                    else  System.out.println(new Receipt(order).generate());
+                }
                 case 4 -> {
                     new CheckOutScreen(order).checkOut();
                     /* System.out.println(new Receipt(order).generate());
                     order.clear();
                     ordering = false;*/
+                    ordering =false;
                 }
                 case 0 -> ordering = false;
             }

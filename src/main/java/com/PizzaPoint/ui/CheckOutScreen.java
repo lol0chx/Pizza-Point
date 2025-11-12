@@ -5,7 +5,29 @@ import com.PizzaPoint.orders.Order;
 import com.PizzaPoint.orders.Receipt;
 import com.PizzaPoint.util.InputHandler;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class CheckOutScreen {
+    static double  tendered;
+    static double change;
+    static String receiptId;
+
+    public static String getReceiptId() {
+        return receiptId;
+    }
+
+    public void setReceiptId(String receiptId) {
+        CheckOutScreen.receiptId = receiptId;
+    }
+
+    public static double getTendered() {
+        return tendered;
+    }
+
+    public static double getChange() {
+        return change;
+    }
 
     private final Order order;
 
@@ -32,14 +54,14 @@ public class CheckOutScreen {
             case 1 -> handleCashPayment(total, receipt);
             //case 2 -> handleCardPayment();
         }
-
+         receiptId = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss"));
         System.out.println("Checkout Complete");
-        receipt.saveToFile("check");
+        receipt.saveToFile(receiptId);
         order.clear();
     }
 
     private void handleCashPayment(double total, Receipt receipt) {
-        double tendered = InputHandler.getDoubleInput(
+         tendered = InputHandler.getDoubleInput(
                 String.format("Total is $%.2f. Enter cash amount: ", total));
 
         if (tendered < total) {
@@ -48,9 +70,9 @@ public class CheckOutScreen {
             return;
         }
 
-        double change = tendered - total;
+        change = tendered - total;
         System.out.printf("Change due: $%.2f%n", change);
-        receipt.addNote(String.format("Paid in cash: tendered $%.2f, change $%.2f.", tendered, change));
+
 
     }
 }

@@ -25,7 +25,16 @@ public class InputHandler {
 
 
 
-
+    public static String getStringInput(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String value = scanner.nextLine().trim();
+            if (!value.isEmpty()) {
+                return value;
+            }
+            System.out.println("Please enter a response.");
+        }
+    }
 
 
     // Get a choice from a list of options
