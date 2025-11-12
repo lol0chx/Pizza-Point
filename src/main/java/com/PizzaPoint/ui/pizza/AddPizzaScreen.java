@@ -11,15 +11,14 @@ import com.PizzaPoint.menu.pizza.PizzaBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class AddPizzaScreen {
     private final Order order;
     //declare outside to use on methods so i can display price of topping based on size
     PizzaSize size;
-    private final Scanner scanner = new Scanner(System.in);
 
     public AddPizzaScreen(Order order) {
+
         this.order = order;
     }
 
@@ -32,7 +31,7 @@ public class AddPizzaScreen {
         CheeseType cheese = chooseCheese();
 
 
-        List<ToppingOption> toppings = chooseToppings();
+    List<ToppingOption> toppings = chooseToppings(size);
 
         double basePrice = size.getBasePrice();
         Pizza pizza = new PizzaBuilder(basePrice, size, crust, sauce, cheese).build();
@@ -112,9 +111,10 @@ public class AddPizzaScreen {
         };
 
     }
-    private List<ToppingOption> chooseToppings() {
+    private List<ToppingOption> chooseToppings(PizzaSize pizzaSize) {
         List<ToppingOption> selected = new ArrayList<>();
         List<ToppingOption> allToppings = new ArrayList<>(ToppingMenu.getAllToppings().values());
+        double multiplier = pizzaSize != null ? pizzaSize.getToppingMultiplier() : 1.0;
 
         int wantTopping = InputHandler.getIntInput("Do you want toppings? 1. Yes  2. No", 1, 2);
         if (wantTopping == 2) return selected;
@@ -131,14 +131,17 @@ public class AddPizzaScreen {
                 System.out.println("Available " + selectedCategory + " toppings:");
                 for (int i = 0; i < filtered.size(); i++) {
                     ToppingOption t = filtered.get(i);
-                    System.out.printf("%d: %s $%.2f\n", i + 1, t.getName(), (t.getPrice() * size.getToppingMultiplier()));
+                    double adjustedPrice = t.getPrice() * multiplier;
+                    System.out.printf("%d: %s $%.2f (size-adjusted)\n", i + 1, t.getName(), adjustedPrice);
                 }
                 System.out.println("0) Done with this category");
                 int toppingChoice = InputHandler.getIntInput("Your choice: ", 0, filtered.size());
                 if (toppingChoice == 0) categoryDone = true;
                 else if (toppingChoice > 0 && toppingChoice <= filtered.size()) {
-                    selected.add(filtered.get(toppingChoice - 1));
-                    System.out.println(filtered.get(toppingChoice - 1).getName() + " added");
+                    ToppingOption chosen = filtered.get(toppingChoice - 1);
+                    double adjustedPrice = chosen.getPrice() * multiplier;
+                    selected.add(chosen);
+                    System.out.printf("%s added ($%.2f extra)\n", chosen.getName(), adjustedPrice);
                 } else {
                     System.out.println("Invalid choice");
                 }

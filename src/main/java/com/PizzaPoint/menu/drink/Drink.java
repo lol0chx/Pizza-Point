@@ -1,10 +1,11 @@
 package com.PizzaPoint.menu.drink;
 
 import com.PizzaPoint.core.enums.DrinkSize;
-import com.PizzaPoint.core.interfaces.Orderable;
 import com.PizzaPoint.menu.MenuItem;
 
 public class Drink extends MenuItem {
+
+
     private final DrinkSize size;
 
     public Drink(String name, DrinkSize size) {
@@ -17,6 +18,7 @@ public class Drink extends MenuItem {
 
     @Override
     public double calculatePrice() {
+
         return size.getPrice();
     }
 }

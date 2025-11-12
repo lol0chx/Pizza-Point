@@ -2,6 +2,7 @@ package com.PizzaPoint.orders;
 
 import com.PizzaPoint.core.enums.PizzaSize;
 import com.PizzaPoint.core.interfaces.Orderable;
+import com.PizzaPoint.menu.drink.Drink;
 import com.PizzaPoint.menu.pizza.Pizza;
 import com.PizzaPoint.menu.pizza.topping.ToppingOption;
 import com.PizzaPoint.util.PriceCalculator;
@@ -32,15 +33,17 @@ public class Receipt {
                 }
                 receipt.append("Base Sauce: ").append(pizza.getSauce()).append("\n");
                 receipt.append("Cheese type: ").append(pizza.getCheese()).append("\n");
-
                 Map<ToppingOption, Integer> toppings = pizza.getToppingsMap();
                 if (toppings.isEmpty()) {
                     receipt.append("Toppings: None\n");
                 } else {
                     receipt.append("Toppings: ");
+                    PizzaSize size = pizza.getSize();
+                    double multiplier = size != null ? size.getToppingMultiplier() : 1.0;
                     toppings.forEach((topping, count) -> {
+                        double adjustedPrice = topping.getPrice() * multiplier;
                         receipt.append(topping.getName())
-                                .append(" ($").append(String.format("%.2f", (topping.getPrice() * pizza.getSize().getToppingMultiplier()) )).append(")");
+                                .append(" ($").append(String.format("%.2f", adjustedPrice)).append(" extra)");
                         if (count > 1) receipt.append(" x").append(count);
                         receipt.append(", ");
                     });
@@ -52,9 +55,13 @@ public class Receipt {
 
                 receipt.append("Subtotal: $").append(String.format("%.2f", pizza.calculatePrice()  )).append("\n\n");
             }
+            else if (item instanceof Drink drink) {
+                receipt.append(drink.getName());
+                receipt.append(drink.getSize());
+                receipt.append(drink.calculatePrice());
+            }
             // Later: handle drinks, desserts, etc.
         }
-
         double total = PriceCalculator.calculateTotal(items);
         receipt.append("------------------\n");
         receipt.append("Total: $").append(String.format("%.2f", total)).append("\n");

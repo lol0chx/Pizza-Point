@@ -19,18 +19,22 @@ public enum  PizzaSize {
     }
 
     public int getDiameter() {
+
         return diameter;
     }
 
     public double getBasePrice() {
+
         return basePrice;
     }
 
     public double getToppingMultiplier() {
+
         return toppingMultiplier;
     }
 
     public double applyToppingPrice(double baseToppingPrice) {
+
         return baseToppingPrice * toppingMultiplier;
     }
 

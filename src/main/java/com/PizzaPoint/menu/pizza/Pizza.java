@@ -6,7 +6,6 @@ import com.PizzaPoint.core.enums.CrustType;
 import com.PizzaPoint.core.enums.PizzaSize;
 import com.PizzaPoint.core.enums.SauceType;
 import com.PizzaPoint.core.interfaces.Customizable;
-import com.PizzaPoint.core.interfaces.Orderable;
 import com.PizzaPoint.menu.MenuItem;
 import com.PizzaPoint.menu.pizza.topping.ToppingOption;
 
@@ -37,6 +36,7 @@ public class Pizza extends MenuItem implements Customizable<ToppingOption> {
     }
 
 
+
     public void setSauce(SauceType sauce) {
         this.sauce.clear();
         this.sauce.add(sauce);
@@ -63,25 +63,32 @@ public class Pizza extends MenuItem implements Customizable<ToppingOption> {
         crust.add(newCrust);
     }
     public CrustType getCrust() {
+
         return crust.getAll().keySet().stream().findFirst().orElse(null);
     }
     public PizzaSize getSize() {
+
         return size.getAll().keySet().stream().findFirst().orElse(null);
     }
+
     // getAll() returns an unmodifiable copy for receipt
     public Map<ToppingOption, Integer> getToppingsMap() {
+
         return toppings.getAll();
     }
     // use for calculation
     public Customization<ToppingOption> getToppings() {
+
         return toppings;
     }
     @Override
     public void add(ToppingOption topping) {
+
         toppings.add(topping);
     }
     @Override
     public void remove(ToppingOption topping) {
+
         toppings.remove(topping);
     }
     @Override
