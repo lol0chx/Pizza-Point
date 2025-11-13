@@ -23,7 +23,7 @@ public class AddPizzaScreen {
     }
 
     public void start() {
-        System.out.println("🍕 Build your pizza!");
+        System.out.println("\n🍕 Build your pizza!");
         //choose size and crust
         size = chooseSize();
         CrustType crust = chooseCrust();
@@ -38,7 +38,7 @@ public class AddPizzaScreen {
         new ToppingSelector(pizza).addMultiple(toppings);
         order.addItem(pizza);
         System.out.println("✅ your Pizza is added!");
-        System.out.println(pizza.displayCustomization());
+       // System.out.println(pizza.displayCustomization());
     }
 
 
@@ -59,14 +59,15 @@ public class AddPizzaScreen {
     }
 
     private CrustType chooseCrust() {
-        String prompt = """
+        double stuffedCrustPrice = CrustType.STUFFED.getExtraCost() * size.getToppingMultiplier();
+        String prompt = String.format("""
                 Select Crust:
                 1: Stuffed Crust ($%.2f more)
                 2: Thin Crust
                 3: Thick Crust
                 4: Pan Crust
                 5: Regular Crust
-                """;
+                """, stuffedCrustPrice);
         int choice = InputHandler.getIntInput(prompt, 1, 4);
         return switch (choice) {
             case 1 -> CrustType.STUFFED;
@@ -111,18 +112,20 @@ public class AddPizzaScreen {
         };
 
     }
+    double multiplier;
     private List<ToppingOption> chooseToppings(PizzaSize pizzaSize) {
         List<ToppingOption> selected = new ArrayList<>();
         List<ToppingOption> allToppings = new ArrayList<>(ToppingMenu.getAllToppings().values());
-        double multiplier = pizzaSize != null ? pizzaSize.getToppingMultiplier() : 1.0;
+         multiplier = pizzaSize != null ? pizzaSize.getToppingMultiplier() : 1.0;
 
-        int wantTopping = InputHandler.getIntInput("Do you want toppings? 1. Yes  2. No", 1, 2);
+        int wantTopping = InputHandler.getIntInput("Do you want toppings? 1. Yes  2. No\n", 1, 2);
         if (wantTopping == 2) return selected;
         boolean done = false;
         while (!done) {
-            int typeChoice = InputHandler.getIntInput("Choose topping type: 1. Veg  2. Meat  0. Done", 0, 2);
+            int typeChoice = InputHandler.getIntInput("Choose topping type: 1. Veg  2. Meat  0. Done\n", 0, 2);
             if (typeChoice == 0) break;
             ToppingCategory selectedCategory = (typeChoice == 1) ? ToppingCategory.VEG : ToppingCategory.MEAT;
+            //show toppings list of selected size
             List<ToppingOption> filtered = allToppings.stream()
                     .filter(t -> t.getCategory() == selectedCategory)
                     .toList();
@@ -131,17 +134,25 @@ public class AddPizzaScreen {
                 System.out.println("Available " + selectedCategory + " toppings:");
                 for (int i = 0; i < filtered.size(); i++) {
                     ToppingOption t = filtered.get(i);
+                    //adjust the price of the toppings according to size
                     double adjustedPrice = t.getPrice() * multiplier;
-                    System.out.printf("%d: %s $%.2f (size-adjusted)\n", i + 1, t.getName(), adjustedPrice);
+                    System.out.printf("%d: %s $%.2f \n", i + 1, t.getName(), adjustedPrice);
                 }
                 System.out.println("0) Done with this category");
                 int toppingChoice = InputHandler.getIntInput("Your choice: ", 0, filtered.size());
                 if (toppingChoice == 0) categoryDone = true;
                 else if (toppingChoice > 0 && toppingChoice <= filtered.size()) {
                     ToppingOption chosen = filtered.get(toppingChoice - 1);
+                    String portionMessage = String.format("how many portions of %s 1-10\n", chosen);
+                    int portionCount = InputHandler.getIntInput(portionMessage,1, 10 );
+
                     double adjustedPrice = chosen.getPrice() * multiplier;
-                    selected.add(chosen);
-                    System.out.printf("%s added ($%.2f extra)\n", chosen.getName(), adjustedPrice);
+                    // Add the topping 'portionCount' times
+                    for (int i = 0; i < portionCount; i++) {
+                        selected.add(chosen);
+                    }
+
+                    System.out.printf("%d X %s added ($%.2f X %d )\n",portionCount, chosen.getName(), adjustedPrice,portionCount);
                 } else {
                     System.out.println("Invalid choice");
                 }

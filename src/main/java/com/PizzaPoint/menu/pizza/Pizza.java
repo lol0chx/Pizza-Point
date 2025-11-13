@@ -35,8 +35,6 @@ public class Pizza extends MenuItem implements Customizable<ToppingOption> {
         cheese.add(initialCheese);
     }
 
-
-
     public void setSauce(SauceType sauce) {
         this.sauce.clear();
         this.sauce.add(sauce);

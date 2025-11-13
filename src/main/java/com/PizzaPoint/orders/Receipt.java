@@ -6,10 +6,13 @@ import com.PizzaPoint.menu.drink.Drink;
 import com.PizzaPoint.menu.pizza.Pizza;
 import com.PizzaPoint.menu.pizza.topping.ToppingOption;
 import com.PizzaPoint.ui.CheckOutScreen;
+import com.PizzaPoint.ui.pizza.AddPizzaScreen;
 import com.PizzaPoint.util.PriceCalculator;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,9 +32,9 @@ public class Receipt {
         receipt.append("--------------------\n");
        // Add customer name or just set it to guest
         String customerName = order.getCustomerName();
-
+       String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss"));
         if (customerName != null && !customerName.isBlank()) {
-            receipt.append("Date and Time: ").append(CheckOutScreen.getReceiptId());
+            receipt.append("Date and Time: ").append(date);
             receipt.append("\nCustomer: ").append(customerName).append("\n");
             receipt.append("--------------------\n");
         }
@@ -47,7 +50,7 @@ public class Receipt {
                 if (pizza.getCrust().getExtraCost() > 0) {
                     receipt.append(String.format(" (+$%.2f)", pizza.getCrust().getExtraCost()));
                 }
-                receipt.append("Base Sauce: ").append(pizza.getSauce()).append("\n");
+                receipt.append("\nBase Sauce: ").append(pizza.getSauce()).append("\n");
                 receipt.append("Cheese type: ").append(pizza.getCheese()).append("\n");
                 Map<ToppingOption, Integer> toppings = pizza.getToppingsMap();
                 if (toppings.isEmpty()) {
@@ -59,7 +62,7 @@ public class Receipt {
                     toppings.forEach((topping, count) -> {
                         double adjustedPrice = topping.getPrice() * multiplier;
                         receipt.append(topping.getName())
-                                .append(" ($").append(String.format("%.2f", adjustedPrice)).append(" extra)");
+                                .append(" ($").append(String.format("%.2f", adjustedPrice));
                         if (count > 1) receipt.append(" x").append(count);
                         receipt.append(", ");
                     });
@@ -106,7 +109,7 @@ public class Receipt {
         String content = generate();
         try (FileWriter writer = new FileWriter("receipts/" + filename)) {
             writer.write(content);
-            System.out.println("Receipt saved to " + filename);
+            System.out.println("Receipt saved");
         } catch (IOException e) {
             System.err.println("Failed to save receipt: " + e.getMessage());
         }

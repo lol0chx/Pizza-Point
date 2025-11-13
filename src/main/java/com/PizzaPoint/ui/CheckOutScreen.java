@@ -42,14 +42,14 @@ public class CheckOutScreen {
         }
 
         Receipt receipt = new Receipt(order);
-        System.out.println("=======Receipt Preview");
+        System.out.println("=======Receipt Preview========");
         System.out.println(receipt.generate());
         //get total of the order
         double total = order.getItems().stream()
                 .mapToDouble(Orderable::calculatePrice)
                 .sum();
 
-        int paymentChoice = InputHandler.getIntInput("Payment method: 1: Cash \n 2: Card: ", 1, 2);
+        int paymentChoice = InputHandler.getIntInput("Payment method: \n1: Cash \n2: Card: \n", 1, 2);
         switch (paymentChoice) {
             case 1 -> handleCashPayment(total, receipt);
             //case 2 -> handleCardPayment();
@@ -62,7 +62,7 @@ public class CheckOutScreen {
 
     private void handleCashPayment(double total, Receipt receipt) {
          tendered = InputHandler.getDoubleInput(
-                String.format("Total is $%.2f. Enter cash amount: ", total));
+                String.format("Total is $%.2f. Enter cash amount: \n", total));
 
         if (tendered < total) {
             System.out.println("Amount is less than total. Please enter again.");

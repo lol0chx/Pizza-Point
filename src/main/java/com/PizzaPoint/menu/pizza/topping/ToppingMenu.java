@@ -10,15 +10,28 @@ public class ToppingMenu {
     static {
 
         //meat toppings
-        ALL_TOPPINGS.put("Pepperoni", new ToppingOption("Pepperoni", 2.0, ToppingCategory.MEAT)); // extra charge
-        ALL_TOPPINGS.put("Beef", new ToppingOption("Beef", 2.5, ToppingCategory.MEAT));
-        ALL_TOPPINGS.put("Italian Sausage", new ToppingOption("Italian Sausage", 2.5, ToppingCategory.MEAT));
+        ALL_TOPPINGS.put("Pepperoni", new ToppingOption("Pepperoni", 1.50, ToppingCategory.MEAT));
+        ALL_TOPPINGS.put("Beef", new ToppingOption("Beef", 2.00, ToppingCategory.MEAT));
+        ALL_TOPPINGS.put("Italian Sausage", new ToppingOption("Italian Sausage", 1.75, ToppingCategory.MEAT));
+        ALL_TOPPINGS.put("Ham", new ToppingOption("Ham", 1.50, ToppingCategory.MEAT));
+        ALL_TOPPINGS.put("Bacon", new ToppingOption("Bacon", 2.00, ToppingCategory.MEAT));
+        ALL_TOPPINGS.put("Chicken", new ToppingOption("Chicken", 2.25, ToppingCategory.MEAT));
+        ALL_TOPPINGS.put("Salami", new ToppingOption("Salami", 1.75, ToppingCategory.MEAT));
+        ALL_TOPPINGS.put("Anchovies", new ToppingOption("Anchovies", 2.50, ToppingCategory.MEAT));
 
-        // veg toppings
-        ALL_TOPPINGS.put("Mushrooms", new ToppingOption("Mushrooms", 1.0, ToppingCategory.VEG));
-        ALL_TOPPINGS.put("Bell Peppers", new ToppingOption("Bell Peppers", 0.8, ToppingCategory.VEG));
-        ALL_TOPPINGS.put("Onions", new ToppingOption("Onions", 0.5, ToppingCategory.VEG));
-        ALL_TOPPINGS.put("Olives", new ToppingOption("Olives", 0.7, ToppingCategory.VEG));
+// veg toppings
+        ALL_TOPPINGS.put("Mushrooms", new ToppingOption("Mushrooms", 1.00, ToppingCategory.VEG));
+        ALL_TOPPINGS.put("Bell Peppers", new ToppingOption("Bell Peppers", 0.75, ToppingCategory.VEG));
+        ALL_TOPPINGS.put("Onions", new ToppingOption("Onions", 0.50, ToppingCategory.VEG));
+        ALL_TOPPINGS.put("Olives", new ToppingOption("Olives", 1.00, ToppingCategory.VEG));
+        ALL_TOPPINGS.put("Tomatoes", new ToppingOption("Tomatoes", 0.75, ToppingCategory.VEG));
+        ALL_TOPPINGS.put("Spinach", new ToppingOption("Spinach", 1.00, ToppingCategory.VEG));
+        ALL_TOPPINGS.put("Jalapeños", new ToppingOption("Jalapeños", 0.75, ToppingCategory.VEG));
+        ALL_TOPPINGS.put("Pineapple", new ToppingOption("Pineapple", 1.00, ToppingCategory.VEG));
+        ALL_TOPPINGS.put("Basil", new ToppingOption("Basil", 0.75, ToppingCategory.VEG));
+        ALL_TOPPINGS.put("Garlic", new ToppingOption("Garlic", 0.50, ToppingCategory.VEG));
+        ALL_TOPPINGS.put("Artichokes", new ToppingOption("Artichokes", 1.50, ToppingCategory.VEG));
+        ALL_TOPPINGS.put("Sun-dried Tomatoes", new ToppingOption("Sun-dried Tomatoes", 1.25, ToppingCategory.VEG));
     }
     public static ToppingOption getToppingByName(String name) {
         return ALL_TOPPINGS.get(name);

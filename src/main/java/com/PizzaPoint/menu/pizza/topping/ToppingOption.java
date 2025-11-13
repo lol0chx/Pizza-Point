@@ -2,7 +2,7 @@ package com.PizzaPoint.menu.pizza.topping;
 
 import com.PizzaPoint.core.enums.ToppingCategory;
 
-public class ToppingOption {
+public  class ToppingOption {
     private final String name;
     private final double price;
     private final ToppingCategory category;
