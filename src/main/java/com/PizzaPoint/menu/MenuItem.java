@@ -1,29 +1,26 @@
 package com.PizzaPoint.menu;
 
 
-public abstract class MenuItem {
-    private String Name;
-    private double price;
+import com.PizzaPoint.core.interfaces.Orderable;
 
-    public MenuItem(String name, double price) {
-        Name = name;
-        this.price = price;
+public abstract class MenuItem  implements Orderable {
+    private String name;
+    private double basePrice;
+
+    public MenuItem (String name ,double basePrice) {
+        this.name = name;
+        this.basePrice = basePrice;
+
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
-    public void setName(String name) {
-        Name = name;
+
+    public double getBasePrice() {
+        return basePrice;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
 
 }
