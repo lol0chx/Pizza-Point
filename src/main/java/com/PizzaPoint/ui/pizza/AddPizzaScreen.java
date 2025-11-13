@@ -6,6 +6,7 @@ import com.PizzaPoint.menu.pizza.topping.ToppingMenu;
 import com.PizzaPoint.menu.pizza.topping.ToppingOption;
 import com.PizzaPoint.menu.pizza.topping.ToppingSelector;
 import com.PizzaPoint.orders.Order;
+import com.PizzaPoint.ui.AddSideScreen;
 import com.PizzaPoint.util.InputHandler;
 import com.PizzaPoint.menu.pizza.PizzaBuilder;
 
@@ -22,7 +23,7 @@ public class AddPizzaScreen {
         this.order = order;
     }
 
-    public void start() {
+    public void buildCustomPizza() {
         System.out.println("\n🍕 Build your pizza!");
         //choose size and crust
         size = chooseSize();
@@ -57,6 +58,12 @@ public class AddPizzaScreen {
         
         selector.addMultiple(toppings);
         order.addItem(pizza);
+        // ask for sides after everything is picked
+        int wantSides = InputHandler.getIntInput("Do you want to add sides? 1. Yes  2. No\n", 1, 2);
+        if (wantSides == 1) {
+            new AddSideScreen(order).start();
+        }
+
         System.out.println("✅ your Pizza is added!");
        // System.out.println(pizza.displayCustomization());
     }

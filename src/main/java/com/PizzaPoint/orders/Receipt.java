@@ -6,7 +6,6 @@ import com.PizzaPoint.menu.drink.Drink;
 import com.PizzaPoint.menu.pizza.Pizza;
 import com.PizzaPoint.menu.pizza.topping.ToppingOption;
 import com.PizzaPoint.ui.CheckOutScreen;
-import com.PizzaPoint.ui.pizza.AddPizzaScreen;
 import com.PizzaPoint.util.PriceCalculator;
 
 import java.io.FileWriter;
