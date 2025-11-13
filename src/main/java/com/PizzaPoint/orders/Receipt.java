@@ -25,6 +25,7 @@ public class Receipt {
     }
 
     public String generate() {
+        int itemNumber = 1;
         StringBuilder receipt = new StringBuilder();
         receipt.append("--------------------\n");
        // Add customer name or just set it to guest
@@ -33,6 +34,7 @@ public class Receipt {
         if (customerName != null && !customerName.isBlank()) {
             receipt.append("Date and Time: ").append(dateTime);
             receipt.append("\nCustomer: ").append(customerName).append("\n");
+            receipt.append("Order #: ").append(order.getItems().size()).append(" item(s)\n");
             receipt.append("--------------------\n");
         }
 
@@ -40,7 +42,7 @@ public class Receipt {
         for (Orderable item : items) {
             if (item instanceof Pizza pizza) {
                 itemName = "pizza";
-                receipt.append(pizza.getName());
+                receipt.append("\n[").append(itemNumber++).append("] ").append(pizza.getName());
                 receipt.append("\nSize: ").append(pizza.getSize()).append(" $").append(pizza.getBasePrice()).append("\n");
                 receipt.append("Crust: ").append(pizza.getCrust());
                 if (pizza.getCrust().getExtraCost() > 0) {
@@ -81,12 +83,13 @@ public class Receipt {
                     receipt.append("\n");
                 }
                 
-                receipt.append(itemName).append(" Total: $").append(String.format("%.2f", pizza.calculatePrice()  )).append("\n\n");
+                receipt.append(itemName).append(" Total: $").append(String.format("%.2f", pizza.calculatePrice()  )).append("\n-----------------------");
             }
             else if (item instanceof Drink drink) {
-                receipt.append(drink.getName()).append(" ");
+                receipt.append("\n[").append(itemNumber++).append("] ").append(drink.getName()).append(" ");
                 receipt.append(drink.getSize()).append(" ");
                receipt.append(drink.calculatePrice()).append("\n");
+               receipt.append("------------------------------");
                // receipt.append(itemName).append("(s) Total: $").append(String.format("%.2f", drink.calculatePrice()  )).append("\n\n");
                 itemName = "Drink";
             }

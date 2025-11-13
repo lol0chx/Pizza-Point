@@ -1,9 +1,10 @@
-package com.PizzaPoint.menu.pizza;
+package com.PizzaPoint.services;
 
 import com.PizzaPoint.core.enums.CheeseType;
 import com.PizzaPoint.core.enums.CrustType;
 import com.PizzaPoint.core.enums.PizzaSize;
 import com.PizzaPoint.core.enums.SauceType;
+import com.PizzaPoint.menu.pizza.Pizza;
 
 public class PizzaBuilder {
     private final Pizza pizza;

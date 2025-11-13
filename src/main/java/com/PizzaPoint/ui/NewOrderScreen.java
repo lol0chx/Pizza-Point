@@ -34,8 +34,15 @@ public class NewOrderScreen {
                 case 2 -> new AddSignaturePizzaScreen(order).start();
                 case 3 -> new AddDrinkScreen(order).start();
                 case 4 -> {
-                    if (order.getItems().isEmpty()) System.out.println("Your order is empty please add to your order");
-                    else  System.out.println(new Receipt(order).generate());
+                    if (order.getItems().isEmpty()) {
+                        System.out.println("Your order is empty please add to your order");
+                    } else {
+                        System.out.println(new Receipt(order).generate());
+                        int removeChoice = InputHandler.getIntInput("Do you want to remove any item? \n1: Yes \n2: No\n", 1, 2);
+                        if (removeChoice == 1) {
+                            removeItemFromOrder();
+                        }
+                    }
                 }
                 case 5 -> {
                     boolean completed = new CheckOutScreen(order).checkOut();
@@ -52,6 +59,22 @@ public class NewOrderScreen {
                 }
                 case 0 -> ordering = false;
             }
+        }
+    }
+    
+    private void removeItemFromOrder() {
+        System.out.println("\n--- Remove item number?---");
+        for (int i = 0; i < order.getItems().size(); i++) {
+            var item = order.getItems().get(i);
+            System.out.println( "Item Number " + "[" + (i + 1) + "]");
+        }
+        
+        int choice = InputHandler.getIntInput("Select item to remove (0 to cancel): ", 0, order.getItems().size());
+        
+        if (choice > 0) {
+            var removedItem = order.getItems().get(choice - 1);
+            order.removeItem(removedItem);
+            System.out.println("✅ Item removed from order!");
         }
     }
 }
