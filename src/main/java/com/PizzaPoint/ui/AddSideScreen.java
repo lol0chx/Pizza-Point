@@ -1,21 +1,19 @@
 package com.PizzaPoint.ui;
 
+import com.PizzaPoint.menu.pizza.Pizza;
 import com.PizzaPoint.menu.pizza.side.Side;
 import com.PizzaPoint.menu.pizza.side.SideMenu;
-import com.PizzaPoint.orders.Order;
-import com.PizzaPoint.util.InputHandler;
+import com.PizzaPoint.services.InputHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddSideScreen {
-    private final Order order;
-
-    public AddSideScreen(Order order) {
-        this.order = order;
-    }
-
-    public void start() {
+    private final Pizza pizza;
+    
+    public AddSideScreen(Pizza pizza) {
+        this.pizza = pizza;
+    }    public void start() {
         List<Side> allSides = new ArrayList<>(SideMenu.getAllSides().values());
         System.out.println("\n--- Select Sides (Free) ---");
 
@@ -27,8 +25,8 @@ public class AddSideScreen {
 
         if (choice > 0) {
             Side selected = allSides.get(choice - 1);
-            order.addItem(selected);
-            System.out.println("✅ " + selected.getName() + " added!");
+            pizza.addSide(selected);
+            System.out.println( selected.getName() + " added!");
         }
     }
 }

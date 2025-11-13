@@ -23,7 +23,6 @@ public class Customization<T> implements Customizable<T> {
         this.singleChoice = singleChoice;
     }
 
-
     // use this for any option topping, size, crust type or any
     @Override
     public void add(T option) {

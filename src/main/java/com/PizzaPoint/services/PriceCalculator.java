@@ -1,4 +1,4 @@
-package com.PizzaPoint.util;
+package com.PizzaPoint.services;
 
 import com.PizzaPoint.core.interfaces.Orderable;
 

@@ -15,7 +15,7 @@ public class DrinkMenu {
         return DRINKS.contains(name);
     }
 
-    public static List<String> getAvailableDrinks() {
+    public static List<String> getAllDrinks() {
         return DRINKS;
     }
 }

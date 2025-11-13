@@ -3,7 +3,7 @@ package com.PizzaPoint.ui;
 import com.PizzaPoint.core.interfaces.Orderable;
 import com.PizzaPoint.orders.Order;
 import com.PizzaPoint.orders.Receipt;
-import com.PizzaPoint.util.InputHandler;
+import com.PizzaPoint.services.InputHandler;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

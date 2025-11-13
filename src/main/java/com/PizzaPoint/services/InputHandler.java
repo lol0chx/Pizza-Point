@@ -1,4 +1,4 @@
-package com.PizzaPoint.util;
+package com.PizzaPoint.services;
 
 import java.util.List;
 import java.util.Scanner;
@@ -22,7 +22,6 @@ public class InputHandler {
             }
         }
     }
-
 
     public static String getCVVInput(String prompt) {
         while (true) {

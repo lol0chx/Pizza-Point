@@ -1,4 +1,4 @@
-package com.PizzaPoint.ui.pizza;
+package com.PizzaPoint.ui;
 
 import com.PizzaPoint.core.enums.*;
 import com.PizzaPoint.menu.pizza.Pizza;
@@ -6,10 +6,8 @@ import com.PizzaPoint.menu.pizza.topping.ToppingMenu;
 import com.PizzaPoint.menu.pizza.topping.ToppingOption;
 import com.PizzaPoint.menu.pizza.topping.ToppingSelector;
 import com.PizzaPoint.orders.Order;
-import com.PizzaPoint.ui.AddSideScreen;
-import com.PizzaPoint.util.InputHandler;
+import com.PizzaPoint.services.InputHandler;
 import com.PizzaPoint.menu.pizza.PizzaBuilder;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,9 +31,7 @@ public class AddPizzaScreen {
         // Ask for extra sauce
         int wantExtraSauce = InputHandler.getIntInput("Do you want extra sauce? 1. Yes  2. No\n", 1, 2);
         boolean extraSauce = (wantExtraSauce == 1);
-        
         CheeseType cheese = chooseCheese();
-        
         // Ask for extra cheese
         int wantExtraCheese = InputHandler.getIntInput("Do you want extra cheese? 1. Yes  2. No\n", 1, 2);
         boolean extraCheese = (wantExtraCheese == 1);
@@ -61,14 +57,12 @@ public class AddPizzaScreen {
         // ask for sides after everything is picked
         int wantSides = InputHandler.getIntInput("Do you want to add sides? 1. Yes  2. No\n", 1, 2);
         if (wantSides == 1) {
-            new AddSideScreen(order).start();
+            new AddSideScreen(pizza).start();
         }
 
         System.out.println("✅ your Pizza is added!");
        // System.out.println(pizza.displayCustomization());
     }
-
-
 
     private PizzaSize chooseSize() {
         String prompt = """
@@ -130,18 +124,14 @@ public class AddPizzaScreen {
                 3: Parmesan
                 4: Mozzarella
                 """;
-        int choice = InputHandler.getIntInput(prompt, 1, 3);
-
+        int choice = InputHandler.getIntInput(prompt, 1, 4);
         return switch (choice) {
             case 1 -> CheeseType.VEGAN;
             case 2 -> CheeseType.CHEDDAR;
             case 3 -> CheeseType.PARMESAN;
             default -> CheeseType.MOZZARELLA;
-           
         };
         //ask for extra cheese after cheese is selected
-
-
     }
     double multiplier;
     private List<ToppingOption> chooseToppings(PizzaSize pizzaSize) {

@@ -3,12 +3,8 @@ package com.PizzaPoint.ui;
 import com.PizzaPoint.core.enums.*;
 import com.PizzaPoint.menu.drink.Drink;
 import com.PizzaPoint.menu.drink.DrinkMenu;
-import com.PizzaPoint.menu.pizza.Pizza;
-import com.PizzaPoint.menu.pizza.PizzaBuilder;
-import com.PizzaPoint.menu.pizza.topping.ToppingOption;
-import com.PizzaPoint.menu.pizza.topping.ToppingSelector;
 import com.PizzaPoint.orders.Order;
-import com.PizzaPoint.util.InputHandler;
+import com.PizzaPoint.services.InputHandler;
 
 import java.util.List;
 
@@ -25,8 +21,6 @@ public class AddDrinkScreen {
         Drink drink = new Drink(drinkName,size);
         order.addItem(drink);
         System.out.println("Your Drink is Added");
-
-
 
     }
     public AddDrinkScreen(Order order) {

@@ -6,8 +6,7 @@ import com.PizzaPoint.menu.drink.Drink;
 import com.PizzaPoint.menu.pizza.Pizza;
 import com.PizzaPoint.menu.pizza.topping.ToppingOption;
 import com.PizzaPoint.ui.CheckOutScreen;
-import com.PizzaPoint.util.PriceCalculator;
-
+import com.PizzaPoint.services.PriceCalculator;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -18,14 +17,13 @@ import java.util.Map;
 
 public class Receipt {
     private final Order order;
-    String itemName;
+    private String itemName;
     private final List<String> notes = new ArrayList<>();
-
-
 
     public Receipt (Order order) {
         this.order = order;
     }
+
     public String generate() {
         StringBuilder receipt = new StringBuilder();
         receipt.append("--------------------\n");
@@ -37,7 +35,6 @@ public class Receipt {
             receipt.append("\nCustomer: ").append(customerName).append("\n");
             receipt.append("--------------------\n");
         }
-
 
         List<Orderable> items = order.getItems();
         for (Orderable item : items) {
@@ -68,12 +65,22 @@ public class Receipt {
                         receipt.append(")");
                         receipt.append(", ");
                     });
-
                     // Remove last comma
                     receipt.setLength(receipt.length() - 2);
                     receipt.append("\n");
                 }
-
+                // Display sides if any
+                if (!pizza.getSides().isEmpty()) {
+                    receipt.append("Sides: ");
+                    for (int i = 0; i < pizza.getSides().size(); i++) {
+                        receipt.append(pizza.getSides().get(i).getName());
+                        if (i < pizza.getSides().size() - 1) {
+                            receipt.append(", ");
+                        }
+                    }
+                    receipt.append("\n");
+                }
+                
                 receipt.append(itemName).append(" Total: $").append(String.format("%.2f", pizza.calculatePrice()  )).append("\n\n");
             }
             else if (item instanceof Drink drink) {
@@ -85,6 +92,7 @@ public class Receipt {
             }
             // Later: handle drinks, desserts, etc.
         }
+
         double total = PriceCalculator.calculateTotal(items);
         receipt.append("\n------------------\n");
         receipt.append(" Sub Total: $").append(String.format("%.2f", total)).append("\n");
@@ -100,12 +108,14 @@ public class Receipt {
 
         return receipt.toString();
     }
+
     public void addNote(String note) {
         if (note == null || note.isBlank()) {
             return;
         }
         notes.add(note);
     }
+
     public void saveToFile(String filename) {
         String content = generate();
         try (FileWriter writer = new FileWriter("receipts/" + filename)) {

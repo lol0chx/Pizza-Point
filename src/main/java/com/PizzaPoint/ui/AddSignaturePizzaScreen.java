@@ -1,4 +1,4 @@
-package com.PizzaPoint.ui.pizza;
+package com.PizzaPoint.ui;
 
 import com.PizzaPoint.core.enums.PizzaSize;
 import com.PizzaPoint.menu.pizza.SignaturePizza;
@@ -8,7 +8,7 @@ import com.PizzaPoint.menu.pizza.topping.ToppingMenu;
 import com.PizzaPoint.menu.pizza.topping.ToppingOption;
 import com.PizzaPoint.menu.pizza.topping.ToppingSelector;
 import com.PizzaPoint.orders.Order;
-import com.PizzaPoint.util.InputHandler;
+import com.PizzaPoint.services.InputHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,6 @@ public class AddSignaturePizzaScreen {
         
         // Choose size
         size = chooseSize();
-        
         // Build the signature pizza with default toppings
         SignaturePizza pizza = SignaturePizzaMenu.create(selectedName, size);
         
@@ -45,6 +44,11 @@ public class AddSignaturePizzaScreen {
         
         if (customize == 1) {
             customizeSignaturePizza(pizza);
+        }
+        // Ask for sides
+        int wantSides = InputHandler.getIntInput("Do you want to add sides? 1. Yes  2. No\n", 1, 2);
+        if (wantSides == 1) {
+            new AddSideScreen(pizza).start();
         }
         
         order.addItem(pizza);

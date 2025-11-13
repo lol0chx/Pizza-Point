@@ -1,13 +1,7 @@
 package com.PizzaPoint.ui;
-
 import com.PizzaPoint.orders.Order;
-
-
-import com.PizzaPoint.util.InputHandler;
-
+import com.PizzaPoint.services.InputHandler;
 public class HomeScreen {
-
-
 
     public void startHome() {
         boolean running = true;
