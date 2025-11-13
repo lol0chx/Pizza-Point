@@ -97,7 +97,7 @@ public class Receipt {
         }
 
         double total = PriceCalculator.calculateTotal(items);
-        receipt.append("\n------------------\n");
+        receipt.append("\n");
         receipt.append(" Sub Total: $").append(String.format("%.2f", total)).append("\n");
 
         if(CheckOutScreen.getTendered() > 0) {

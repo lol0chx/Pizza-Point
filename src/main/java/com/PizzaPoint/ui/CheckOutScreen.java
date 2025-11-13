@@ -49,6 +49,7 @@ public class CheckOutScreen {
                 .mapToDouble(Orderable::calculatePrice)
                 .sum();
 
+
         while (true) {
             int paymentChoice = InputHandler.getIntInput("Payment method: \n1: Cash \n2: Card \n0: Back\n", 0, 2);
             switch (paymentChoice) {
