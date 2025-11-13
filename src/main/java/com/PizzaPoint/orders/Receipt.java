@@ -20,7 +20,7 @@ import java.util.Map;
 public class Receipt {
     private final Order order;
     String itemName;
-    private static final List<String> notes = new ArrayList<>();
+    private final List<String> notes = new ArrayList<>();
 
 
 
@@ -32,9 +32,9 @@ public class Receipt {
         receipt.append("--------------------\n");
        // Add customer name or just set it to guest
         String customerName = order.getCustomerName();
-       String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss"));
+        String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("'Date:' yyyy-MM-dd 'Time:' HH-mm-ss"));
         if (customerName != null && !customerName.isBlank()) {
-            receipt.append("Date and Time: ").append(date);
+            receipt.append("Date and Time: ").append(dateTime);
             receipt.append("\nCustomer: ").append(customerName).append("\n");
             receipt.append("--------------------\n");
         }
@@ -63,7 +63,10 @@ public class Receipt {
                         double adjustedPrice = topping.getPrice() * multiplier;
                         receipt.append(topping.getName())
                                 .append(" ($").append(String.format("%.2f", adjustedPrice));
-                        if (count > 1) receipt.append(" x").append(count);
+                        if (count > 1) {
+                            receipt.append(" x").append(count);
+                        }
+                        receipt.append(")");
                         receipt.append(", ");
                     });
 
@@ -93,13 +96,12 @@ public class Receipt {
         }
 
         if (!notes.isEmpty()) {
-            receipt.append("\nNotes:\n");
             notes.forEach(entry -> receipt.append("- ").append(entry).append("\n"));
         }
 
         return receipt.toString();
     }
-    public static void addNote(String note) {
+    public void addNote(String note) {
         if (note == null || note.isBlank()) {
             return;
         }

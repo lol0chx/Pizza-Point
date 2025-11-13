@@ -24,18 +24,38 @@ public class InputHandler {
     }
 
 
+    public static String getCVVInput(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String cvv = scanner.nextLine().trim();
+            if (cvv.matches("\\d{3}")) {
+                return cvv;
+            }
+            System.out.println("Please enter a valid CVV (must be 3 digits).");
+        }
+    }
 
     public static String getStringInput(String prompt) {
         while (true) {
             System.out.print(prompt);
             String value = scanner.nextLine().trim();
-            if (!value.isEmpty()) {
+            if (!value.isEmpty() && value.matches("[a-zA-Z\\s]+")) {
                 return value;
             }
-            System.out.println("Please enter a response.");
+            System.out.println("Please enter a valid Input.");
         }
     }
-
+    public static String getCardNumberInput(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String cardNumber = scanner.nextLine().trim();
+            cardNumber = cardNumber.replaceAll("[\\s-]", ""); // Remove spaces and dashes
+            if (cardNumber.matches("\\d{16}")) {
+                return cardNumber;
+            }
+            System.out.println("Please enter a valid card number (must be 16 digits).");
+        }
+    }
 
     // Get a choice from a list of options
     public static <T> T getListInput(String prompt, List<T> options) {

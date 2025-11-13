@@ -41,9 +41,10 @@ public class HomeScreen {
                                     2: Add drink
                                     3: View order
                                     4: Checkout
+                                    5: Start new Order
                                     0: Back to home
                                    """);
-            int selection = InputHandler.getIntInput("Choose an option: ", 0, 4);
+            int selection = InputHandler.getIntInput("Choose an option: ", 0, 5);
             switch (selection) {
                 case 1 -> new AddPizzaScreen(order).start();
                 case 2 -> new AddDrinkScreen(order).start();
@@ -52,11 +53,17 @@ public class HomeScreen {
                     else  System.out.println(new Receipt(order).generate());
                 }
                 case 4 -> {
-                    new CheckOutScreen(order).checkOut();
-                    /* System.out.println(new Receipt(order).generate());
+                    boolean completed = new CheckOutScreen(order).checkOut();
+                    if (completed) {
+                        ordering = false;
+                    }
+
+
+                }
+                case 5 -> {
                     order.clear();
-                    ordering = false;*/
-                    ordering =false;
+                    orderName = InputHandler.getStringInput("Enter name for the order: ");
+                    order.setCustomerName(orderName);
                 }
                 case 0 -> ordering = false;
             }

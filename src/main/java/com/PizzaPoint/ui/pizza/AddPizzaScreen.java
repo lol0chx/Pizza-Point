@@ -28,14 +28,34 @@ public class AddPizzaScreen {
         size = chooseSize();
         CrustType crust = chooseCrust();
         SauceType sauce = chooseSauce();
+        
+        // Ask for extra sauce
+        int wantExtraSauce = InputHandler.getIntInput("Do you want extra sauce? 1. Yes  2. No\n", 1, 2);
+        boolean extraSauce = (wantExtraSauce == 1);
+        
         CheeseType cheese = chooseCheese();
+        
+        // Ask for extra cheese
+        int wantExtraCheese = InputHandler.getIntInput("Do you want extra cheese? 1. Yes  2. No\n", 1, 2);
+        boolean extraCheese = (wantExtraCheese == 1);
 
-
-    List<ToppingOption> toppings = chooseToppings(size);
+        List<ToppingOption> toppings = chooseToppings(size);
 
         double basePrice = size.getBasePrice();
         Pizza pizza = new PizzaBuilder(basePrice, size, crust, sauce, cheese).build();
-        new ToppingSelector(pizza).addMultiple(toppings);
+        
+        // Add extras if selected
+        ToppingSelector selector = new ToppingSelector(pizza);
+        if (extraSauce) {
+            ToppingOption sauceTopping = ToppingMenu.getAllToppings().get("Extra Sauce");
+            if (sauceTopping != null) selector.addTopping(sauceTopping);
+        }
+        if (extraCheese) {
+            ToppingOption cheeseTopping = ToppingMenu.getAllToppings().get("Extra Cheese");
+            if (cheeseTopping != null) selector.addTopping(cheeseTopping);
+        }
+        
+        selector.addMultiple(toppings);
         order.addItem(pizza);
         System.out.println("✅ your Pizza is added!");
        // System.out.println(pizza.displayCustomization());
@@ -104,12 +124,16 @@ public class AddPizzaScreen {
                 4: Mozzarella
                 """;
         int choice = InputHandler.getIntInput(prompt, 1, 3);
+
         return switch (choice) {
             case 1 -> CheeseType.VEGAN;
             case 2 -> CheeseType.CHEDDAR;
             case 3 -> CheeseType.PARMESAN;
             default -> CheeseType.MOZZARELLA;
+           
         };
+        //ask for extra cheese after cheese is selected
+
 
     }
     double multiplier;

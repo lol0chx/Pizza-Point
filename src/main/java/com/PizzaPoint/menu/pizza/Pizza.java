@@ -96,7 +96,7 @@ public class Pizza extends MenuItem implements Customizable<ToppingOption> {
         return "🍕 Pizza Customization:\n" +
                 " - Size: " + size.display() + "\n" +
                 " - Crust: " + crust.display() + "\n" +
-                " - Toppings: " + toppings.display()  + "whyyyy" + getToppingMultiplier(currentSize);
+                " - Toppings: " + toppings.display()  + getToppingMultiplier(currentSize);
     }
 
     @Override

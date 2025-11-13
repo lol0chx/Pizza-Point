@@ -19,7 +19,11 @@ public class ToppingMenu {
         ALL_TOPPINGS.put("Salami", new ToppingOption("Salami", 1.75, ToppingCategory.MEAT));
         ALL_TOPPINGS.put("Anchovies", new ToppingOption("Anchovies", 2.50, ToppingCategory.MEAT));
 
-// veg toppings
+        //cheese and sauce
+        ALL_TOPPINGS.put("Extra Cheese", new ToppingOption("Extra Cheese", 2.00, ToppingCategory.EXTRA));
+        ALL_TOPPINGS.put("Extra Sauce", new ToppingOption("Extra Sauce", 1.00, ToppingCategory.EXTRA));
+
+        // veg toppings
         ALL_TOPPINGS.put("Mushrooms", new ToppingOption("Mushrooms", 1.00, ToppingCategory.VEG));
         ALL_TOPPINGS.put("Bell Peppers", new ToppingOption("Bell Peppers", 0.75, ToppingCategory.VEG));
         ALL_TOPPINGS.put("Onions", new ToppingOption("Onions", 0.50, ToppingCategory.VEG));
