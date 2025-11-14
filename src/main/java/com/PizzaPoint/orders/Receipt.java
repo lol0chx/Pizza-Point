@@ -29,7 +29,7 @@ public class Receipt {
         int itemNumber = 1;
         StringBuilder receipt = new StringBuilder();
         receipt.append("--------------------\n");
-       // Add customer name or just set it to guest
+        // Add customer name or just set it to guest
         String customerName = order.getCustomerName();
         String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("'Date:' yyyy-MM-dd 'Time:' HH-mm-ss"));
         if (customerName != null && !customerName.isBlank()) {
@@ -83,14 +83,14 @@ public class Receipt {
                     }
                     receipt.append("\n");
                 }
-                
+
                 receipt.append(itemName).append(" Total: $").append(String.format("%.2f", pizza.calculatePrice()  )).append("\n-----------------------");
             }
             else if (item instanceof Drink drink) {
                 receipt.append("\n[").append(itemNumber++).append("] ").append(drink.getName()).append(" ");
                 receipt.append(drink.getSize()).append(" ");
-               receipt.append(drink.calculatePrice()).append("\n");
-               receipt.append("------------------------------");
+                receipt.append(drink.calculatePrice()).append("\n");
+                receipt.append("------------------------------");
                 itemName = "Drink";
             }
             else if (item instanceof GarlicKnots garlicKnots) {
