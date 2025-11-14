@@ -1,238 +1,194 @@
 # 🍕 PizzaPoint - Pizza Ordering System
 
-A Java-based console application for managing pizza orders with customizable pizzas, signature pizzas, drinks, and checkout functionality.
+A feature-rich Java console application for managing pizza orders with full customization, payment processing, and transaction tracking.
 
 ## 📋 Table of Contents
-- [Features](#features)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-- [How to Use](#how-to-use)
-- [Menu Options](#menu-options)
-- [Payment Processing](#payment-processing)
-- [Architecture Highlights](#architecture-highlights)
+- [Features](#-features)
+- [Screenshots](#-screenshots)
+- [Architecture](#-architecture)
+- [OOP Concepts Used](#-oop-concepts-used)
+- [Favorite Code Snippet](#-favorite-code-snippet)
+- [Tech Stack](#-tech-stack)
+- [Getting Started](#-getting-started)
+- [Usage](#-usage)
 
 ## ✨ Features
 
-### 🎯 Core Functionality
-- **Custom Pizza Builder**: Create your own pizza with customizable size, crust, sauce, cheese, and toppings
-- **Signature Pizzas**: Pre-designed pizza templates (Meat Lovers, Veggie Supreme, Hawaiian, BBQ Chicken, Margherita)
-- **Customizable Signature Pizzas**: Add or remove toppings from signature pizzas
-- **Drink Orders**: Add drinks with various sizes
-- **Free Sides**: Add complimentary sides (Parmesan packets, pepper flakes) to pizzas
-- **Order Management**: View, modify, and manage orders before checkout
-- **Payment Processing**: Support for both cash and card payments
-- **Receipt Generation**: Detailed receipts with customer name, timestamp, and itemized pricing
-- **Receipt Persistence**: Automatically saves receipts to `receipts/` directory
+### 🍕 Order Management
+- **Custom Pizza Builder** - Create pizzas with customizable size, crust, sauce, cheese, and unlimited toppings
+- **Signature Pizzas** - Pre-designed templates (Meat Lovers, Veggie Supreme, Hawaiian, BBQ Chicken, Margherita)
+- **Customizable Signature Pizzas** - Modify any signature pizza by changing crust, sauce, or toppings
+- **Drinks & Sides** - Add drinks with multiple sizes and free sides (Parmesan, pepper flakes)
+- **Garlic Knots** - Additional menu item option
+- **Order Preview** - View and modify cart before checkout
+- **Item Removal** - Remove items from order before finalizing
+
+### 💳 Payment & Receipts
+- **Dual Payment Methods** - Cash (with change calculation) and card (NOT functional yet Just card validation for correct input )
+- **Receipt Generation** - Detailed receipts with customer name, timestamp, and itemized pricing
+- **Receipt Persistence** - Auto-saves to `receipts/` directory with unique IDs
+- **Transaction Logging** - Tracks all orders in `transactions.csv` with pipe-delimited format
+
+### 📊 Ledger System
+- **View All Transactions** - Display complete transaction history in formatted table
+- **Search by Receipt ID** - Quick lookup by entering receipt number
+- **CSV Export** - All transactions stored for analysis
 
 ### 🔧 Technical Features
-- Generic-based customization system for flexible item configuration
-- Enum-driven menu items with pricing logic
-- Dynamic pricing based on pizza size (topping multipliers)
-- Input validation for all user interactions
-- Factory pattern for signature pizza creation
-- Composition-based design for pizza accessories (sides)
+- **Dynamic Pricing** - Topping prices adjust based on pizza size (1.0x, 1.5x, 2.0x multipliers)
+- **Input Validation** - Comprehensive validation for all user inputs
+- **Generic Customization System** - Flexible architecture for single or multiple selections
+- **Builder Pattern** - Pizza construction with fluent interface
+- **Factory Pattern** - Signature pizza creation
 
-## 📁 Project Structure
+## 📸 Screenshots
 
+### Home Screen
+![Home Screen](screenshots/homescreen.png)
+
+### New Order Menu
+![New Order Screen](screenshots/neworderscreen.png)
+
+### Custom Pizza Builder
+![Add Custom Pizza](screenshots/addcustompizzascreen.png)
+
+### Order Preview
+![View Order](screenshots/vieworderscreen.png)
+
+### Ledger System
+![Ledger Screen](screenshots/ledgerscreen.png)
+
+## 🏗 Architecture
+
+### UML Class Diagram
+![UML Diagram](screenshots/final%20uml.png)
+
+
+
+## 🎯 OOP Concepts Used
+
+### Inheritance
+- **MenuItem** abstract class extended by `Pizza`, `Drink`, `GarlicKnots`
+- **SignaturePizza** extends `Pizza` for specialized pizzas
+
+### Interfaces
+- **Orderable** - Contract for items that can be ordered and priced
+- **Customizable<T>** - Generic interface for customizable items
+
+### Polymorphism
+- Order stores `List<Orderable>` allowing any menu item type
+- Receipt handles different item types polymorphically
+
+### Encapsulation
+- Private fields with public getters/setters
+- Validation logic encapsulated in `InputHandler`
+- Business logic separated into service classes
+
+### Abstraction
+- Abstract `MenuItem` class defines common behavior
+- Interfaces hide implementation details
+
+### Composition
+- Pizza **has-a** list of toppings, sides, and customizations
+- Order **has-a** list of orderable items
+
+### Generics
+- `Customization<T>` works with any type (toppings, sizes, crusts)
+- `Customizable<T>` interface for type-safe customization
+
+### Enums
+- Type-safe constants with behavior (pricing methods)
+- `PizzaSize`, `CrustType`, `SauceType`, `CheeseType`, `DrinkSize`, `ToppingCategory`
+
+### Design Patterns
+- **Builder Pattern** - `PizzaBuilder` for pizza construction
+- **Factory Pattern** - `SignaturePizzaMenu` creates signature pizzas
+- **Singleton Pattern** - Static `InputHandler` scanner
+
+## 💎 Favorite Code Snippet
+
+This elegant solution in `Customization.java` handles both single-choice options (like pizza size) and multi-choice options (like toppings) with a simple boolean flag:
+
+```java
+// Adds option: replaces if single-choice, increments count if multiple allowed
+@Override
+public void add(T option) {
+    if (singleChoice) {
+        options.clear();
+        options.put(option, 1);
+    } else {
+        options.put(option, options.getOrDefault(option, 0) + 1);
+    }
+}
+
+// Decrements option count or removes entirely if count is 1
+@Override
+public void remove(T option) {
+    if (!options.containsKey(option)) return;
+    int count = options.get(option);
+    if (count <= 1) options.remove(option);
+    else options.put(option, count - 1);
+}
 ```
-PizzaPoint/
-├── src/main/java/com/PizzaPoint/
-│   ├── Main.java                          # Application entry point
-│   ├── core/
-│   │   ├── Customization.java             # Generic customization container
-│   │   ├── enums/
-│   │   │   ├── PizzaSize.java            # SMALL, MEDIUM, LARGE with pricing
-│   │   │   ├── CrustType.java            # REGULAR, THIN, THICK, etc.
-│   │   │   ├── SauceType.java            # MARINARA, ALFREDO, BBQ, etc.
-│   │   │   ├── CheeseType.java           # MOZZARELLA, CHEDDAR, etc.
-│   │   │   ├── DrinkSize.java            # SMALL, MEDIUM, LARGE
-│   │   │   ├── OrderStatus.java          # Order state management
-│   │   │   └── ToppingCategory.java      # VEG, MEAT, EXTRA
-│   │   └── interfaces/
-│   │       ├── Customizable.java         # For items with add/remove options
-│   │       ├── Orderable.java            # Items that can be ordered
-│   │       ├── PricedItem.java           # Items with pricing logic
-│   │       └── Saveable.java             # Persistable entities
-│   ├── menu/
-│   │   ├── MenuItem.java                  # Abstract base for menu items
-│   │   ├── pizza/
-│   │   │   ├── Pizza.java                # Pizza entity with customization
-│   │   │   ├── SignaturePizza.java       # Predefined pizza templates
-│   │   │   ├── SignaturePizzaMenu.java   # Factory for signature pizzas
-│   │   │   ├── side/
-│   │   │   │   ├── Side.java             # Side item (napkins, packets, etc.)
-│   │   │   │   └── SideMenu.java         # Available sides catalog
-│   │   │   └── toppings/
-│   │   │       ├── Topping.java          # Base topping class
-│   │   │       ├── ToppingOption.java    # Topping with category
-│   │   │       ├── ToppingMenu.java      # All available toppings
-│   │   │       └── ToppingSelector.java  # Helper for adding toppings
-│   │   └── drink/
-│   │       ├── Drink.java                # Drink entity
-│   │       └── DrinkMenu.java            # Available drinks catalog
-│   ├── orders/
-│   │   ├── Order.java                     # Order container with customer info
-│   │   ├── Receipt.java                   # Receipt generator and formatter
-│   │   └── PriceCalculator.java          # Pricing utilities
-│   ├── ui/
-│   │   ├── HomeScreen.java                # Main menu
-│   │   ├── NewOrderScreen.java            # Order management screen
-│   │   ├── CheckOutScreen.java            # Payment processing
-│   │   ├── AddSideScreen.java             # Side selection UI
-│   │   ├── AddDrinkScreen.java            # Drink selection UI
-│   │   └── pizza/
-│   │       ├── AddPizzaScreen.java       # Custom pizza builder UI
-│   │       └── AddSignaturePizzaScreen.java # Signature pizza UI
-│   └── util/
-│       ├── InputHandler.java              # User input validation
-│       └── PriceCalculator.java           # Total calculation logic
-└── receipts/                               # Saved receipt files
 
-```
+**Why I love this code:**
+- Uses **generics** for type flexibility
+- Single class handles two different behaviors (single vs. multiple selection)
+- Clean **Map** usage with `getOrDefault()` for concise logic
+- Properly manages item quantities (add multiple toppings, remove one at a time)
+- Demonstrates **composition over inheritance**
+
+## 🛠 Tech Stack
+
+- **Language:** Java 17+
+- **Build Tool:** Maven
+- **Testing:** JUnit 5
+- **File I/O:** Java NIO for receipts and CSV logging
+- **Architecture:** MVC-inspired with UI, Services, and Domain layers
 
 ## 🚀 Getting Started
 
-### Prerequisites
-- Java 25 or higher
-- Maven
+## 📖 Usage
 
-### Installation & Running
+### Main Menu
+1. **New Order** - Start building your order
+2. **Ledger** - View transaction history or search receipts
+0. **Exit** - Close application
 
-1. **Clone the repository**
-```bash
-git clone https://github.com/lol0chx/Pizza-Point.git
-cd Pizza-Point
-```
+### Building an Order
+1. Choose from custom pizza, signature pizza, drinks, or garlic knots
+2. Customize your selections
+3. Preview order and remove items if needed
+4. Proceed to checkout
 
-2. **Build the project**
-```bash
-mvn clean compile
-```
+### Payment
+- **Cash** - Enter amount tendered, receive change calculation
+- **Card** - Enter card details (number, expiry, CVV, cardholder name)
 
-3. **Run the application**
-```bash
-mvn exec:java -Dexec.mainClass="com.PizzaPoint.Main"
-```
+### Receipt & Transactions
+- Receipts saved to `receipts/` folder with timestamp ID format: `YYYYMMDD-HHMMSS`
+- All transactions logged to `transactions.csv` with format: `ReceiptID|Date|Time|Customer|Amount`
 
-## 🎮 How to Use
 
-### Starting an Order
 
-1. Launch the application
-2. Select "New order" from the home screen
-3. Enter customer name
-4. Choose from the following options:
-   - Add Custom Pizza
-   - Add Signature Pizza
-   - Add Drink
-   - View Order
-   - Checkout
-   - Start New Order
-   - Back to Home
+## 🤝 Contributing
 
-### Building a Custom Pizza
-
-1. Select "Add Custom Pizza"
-2. Choose pizza size (Small $10.99, Medium $14.99, Large $18.99)
-3. Select crust type (Regular, Thin, Thick, Stuffed, Gluten-Free)
-4. Choose base sauce (Marinara, Alfredo, BBQ, Pesto, Ranch, White Garlic)
-5. Add extra sauce if desired
-6. Select cheese type (Mozzarella, Cheddar, Parmesan, Provolone, Ricotta, Vegan)
-7. Add extra cheese if desired
-8. Add toppings by category:
-   - **Vegetables**: Mushrooms, Bell Peppers, Onions, Olives, Tomatoes, Spinach, Jalapeños
-   - **Meats**: Pepperoni, Italian Sausage, Bacon, Ham, Beef, Chicken, Anchovies
-   - **Extras**: Extra Cheese ($2.00), Extra Sauce ($1.00)
-9. Add free sides (Parmesan packets, Pepper flakes)
-10. Pizza is added to your order!
-
-### Ordering Signature Pizzas
-
-1. Select "Add Signature Pizza"
-2. Choose from 5 signature pizzas:
-   - **Meat Lovers**: Pepperoni, Beef, Bacon, Italian Sausage
-   - **Veggie Supreme**: Mushrooms, Bell Peppers, Onions, Olives
-   - **Hawaiian**: Ham and Pineapple
-   - **BBQ Chicken**: Grilled Chicken with BBQ sauce, Onions, Bell Peppers
-   - **Margherita**: Fresh Basil, Tomatoes (simple and classic)
-3. Select pizza size
-4. Optionally customize by adding or removing toppings
-5. Add free sides
-6. Pizza is added to your order!
-
-## 💳 Payment Processing
-
-### Cash Payment
-1. System displays total amount
-2. Enter cash amount tendered
-3. Must be >= total amount
-4. System calculates and displays change
-5. Payment details added to receipt
-
-### Card Payment
-1. System displays total amount
-2. Enter 16-digit card number (spaces/dashes allowed)
-3. Enter 3-digit CVV
-4. Enter expiration month (1-12)
-5. Enter expiration year (current year to +15 years)
-6. All inputs are validated
-7. Payment confirmation added to receipt
-
-## 🧾 Receipt Details
-
-Receipts include:
-- Customer name
-- Order date and timestamp
-- Itemized list with:
-  - Pizza details (size, crust, sauce, cheese)
-  - Toppings with adjusted prices based on size
-  - Topping quantities (e.g., "Pepperoni x2")
-  - Free sides attached to each pizza
-  - Drinks with sizes
-- Subtotal
-- Payment method and details (cash tendered/change)
-- Unique receipt ID with timestamp format: `yyyyMMdd-HHmmss`
-
-Receipts are automatically saved to the `receipts/` directory.
-
-## 🏗️ Architecture Highlights
-
-### Design Patterns
-- **Factory Pattern**: `SignaturePizzaMenu` creates predefined pizzas
-- **Builder Pattern**: Custom pizza construction through `AddPizzaScreen`
-- **Strategy Pattern**: Different pricing strategies for sizes and toppings
-- **Composition Over Inheritance**: Sides stored in Pizza objects rather than extending MenuItem
-
-### Key Design Decisions
-1. **Generic Customization System**: `Customization<T>` allows type-safe option tracking with counts
-2. **Enum-Driven Pricing**: Pizza sizes, crusts, and drink sizes encapsulate their own pricing logic
-3. **Single-Choice Customizations**: Size, crust, sauce, and cheese use single-choice mode (replaces on change)
-4. **Multi-Choice Toppings**: Toppings use count-based tracking (can add multiple portions)
-5. **Dynamic Pricing**: Topping prices multiply based on pizza size (Small x1.0, Medium x1.5, Large x2.0)
-6. **Sides as Accessories**: Sides are free items attached to pizzas, not independently orderable
-
-### Input Validation
-All user inputs are validated through `InputHandler`:
-- Integer ranges (menu choices)
-- Double amounts (cash payments)
-- String patterns (customer names: letters and spaces only)
-- Card numbers (16 digits, strips formatting)
-- CVV (3 digits)
-- Expiration dates (valid month/year ranges)
-
-## 📝 Future Enhancements
-- Dessert menu items
-- Delivery address management
-- Order history and favorites
-- Promotional codes and discounts
-- Multiple payment splitting
-- GUI interface
-
-## 👤 Author
-**Enoch** (lol0chx)
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## 📄 License
-This project is part of a Pluralsight learning exercise.
+
+This project is open source and available for educational purposes.
+
+## 👤 Author
+
+**lol0chx**
+- GitHub: [@lol0chx](https://github.com/lol0chx)
+- Repository: [Pizza-Point](https://github.com/lol0chx/Pizza-Point)
 
 ---
-*Built with ☕ and 🍕*
+
+⭐ **Star this repo if you find it helpful!**
