@@ -35,8 +35,6 @@ class SignaturePizzaMenuTest {
         assertFalse(pizza.getToppingsMap().isEmpty(), "Veggie Supreme should have toppings");
     }
 
-
-
     @Test
     void getSignaturePizzaNames_returnsAllPizzaNames() {
         // Arrange & Act

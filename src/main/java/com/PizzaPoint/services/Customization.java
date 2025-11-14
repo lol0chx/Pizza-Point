@@ -45,11 +45,13 @@ public class Customization<T> implements Customizable<T> {
 
     // Get count of a specific option
     public int getCount(T option) {
+
         return options.getOrDefault(option, 0);
     }
 
     // Get all options and their counts
     public Map<T, Integer> getAll() {
+
         return Map.copyOf(options);
     }
     @Override

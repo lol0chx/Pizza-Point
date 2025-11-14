@@ -36,6 +36,10 @@ public class CheckOutScreen {
     }
 
     public boolean checkOut() {
+        // Reset static variables from previous transactions
+        tendered = 0;
+        change = 0;
+        
         if (order.getItems().isEmpty()) {
             System.out.println("Your order is empty ");
             return false;
@@ -76,6 +80,10 @@ public class CheckOutScreen {
         return true;
     }
     private void handleCardPayment(double total, Receipt receipt) {
+        // Reset cash payment variables for card transactions
+        tendered = 0;
+        change = 0;
+        
         System.out.println("\n--- Card Payment ---");
         System.out.printf("Total amount: $%.2f%n", total);
 
@@ -124,7 +132,7 @@ public class CheckOutScreen {
         String maskedCard = "**** **** **** " + cardNumber.substring(12);
 
         System.out.println("Card ending in " + cardNumber.substring(12) + " charged $" + String.format("%.2f", total));
-        receipt.addNote(String.format("Paid by card: %s, Cardholder: %s", maskedCard, cardholderName));
+        receipt.addNote(String.format("\nPaid by card: %s, \nCardholder: %s", maskedCard, cardholderName));
     }
     private void handleCashPayment(double total, Receipt receipt) {
          tendered = InputHandler.getDoubleInput(

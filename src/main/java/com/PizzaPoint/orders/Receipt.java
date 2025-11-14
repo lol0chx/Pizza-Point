@@ -25,6 +25,7 @@ public class Receipt {
         this.order = order;
     }
 
+    // Generates formatted receipt text with header, items, and footer
     public String generate() {
         int itemNumber = 1;
         StringBuilder receipt = new StringBuilder();
@@ -39,8 +40,10 @@ public class Receipt {
             receipt.append("--------------------\n");
         }
 
+        // Iterate through all items and format each type
         List<Orderable> items = order.getItems();
         for (Orderable item : items) {
+            // Format pizza with size, crust, toppings, and sides
             if (item instanceof Pizza pizza) {
                 itemName = "pizza";
                 receipt.append("\n[").append(itemNumber++).append("] ").append(pizza.getName());
@@ -56,6 +59,7 @@ public class Receipt {
                     receipt.append("Toppings: None\n");
                 } else {
                     receipt.append("Toppings: ");
+                    // Apply size multiplier to topping prices
                     PizzaSize size = pizza.getSize();
                     double multiplier = size != null ? size.getToppingMultiplier() : 1.0;
                     toppings.forEach((topping, count) -> {
@@ -83,14 +87,14 @@ public class Receipt {
                     }
                     receipt.append("\n");
                 }
-
+                
                 receipt.append(itemName).append(" Total: $").append(String.format("%.2f", pizza.calculatePrice()  )).append("\n-----------------------");
             }
             else if (item instanceof Drink drink) {
                 receipt.append("\n[").append(itemNumber++).append("] ").append(drink.getName()).append(" ");
                 receipt.append(drink.getSize()).append(" ");
-                receipt.append(drink.calculatePrice()).append("\n");
-                receipt.append("------------------------------");
+               receipt.append(drink.calculatePrice()).append("\n");
+               receipt.append("------------------------------");
                 itemName = "Drink";
             }
             else if (item instanceof GarlicKnots garlicKnots) {
@@ -100,10 +104,12 @@ public class Receipt {
             }
         }
 
+        // Calculate and display total
         double total = PriceCalculator.calculateTotal(items);
         receipt.append("\n");
         receipt.append(" Sub Total: $").append(String.format("%.2f", total)).append("\n");
 
+        // Add cash payment details if applicable
         if(CheckOutScreen.getTendered() > 0) {
             receipt.append("customer paid Cash: ").append(CheckOutScreen.getTendered());
             receipt.append("\nChange: ").append(CheckOutScreen.getChange());
@@ -116,6 +122,7 @@ public class Receipt {
         return receipt.toString();
     }
 
+    // Adds a note to the receipt (e.g., payment method details)
     public void addNote(String note) {
         if (note == null || note.isBlank()) {
             return;
@@ -123,6 +130,7 @@ public class Receipt {
         notes.add(note);
     }
 
+    // Saves receipt to file in receipts directory
     public void saveToFile(String filename) {
         String content = generate();
         try (FileWriter writer = new FileWriter("receipts/" + filename)) {
