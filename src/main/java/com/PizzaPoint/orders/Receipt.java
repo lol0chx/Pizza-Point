@@ -113,8 +113,8 @@ public class Receipt {
         receipt.append("\n═══════════════════════════════════════\n");
         receipt.append("  SUBTOTAL: $").append(String.format("%.2f", total)).append("\n");
 
-        // Add cash payment details if applicable
-        if(CheckOutScreen.getTendered() > 0) {
+        // Add cash payment details only when finalizing (includeThanks means it's checkout)
+        if(includeThanks && CheckOutScreen.getTendered() > 0) {
             receipt.append("  Cash Tendered: $").append(String.format("%.2f", CheckOutScreen.getTendered())).append("\n");
             receipt.append("  Change: $").append(String.format("%.2f", CheckOutScreen.getChange())).append("\n");
         }

@@ -93,6 +93,11 @@ public class CheckOutScreen {
         System.out.println("═══════════════════════════════════════");
         
         receipt.saveToFile(receiptId);
+        
+        // Display final receipt
+        System.out.println("\n📄 ======= FINAL RECEIPT ========");
+        System.out.println(receipt.generate(true));
+        
         order.clear();
         return true;
     }
