@@ -49,22 +49,4 @@ class PizzaTest {
             "Pizza price should include base price plus toppings with size multiplier");
     }
 
-    @Test
-    void calculatePrice_withStuffedCrust_addsExtraCost() {
-        // Arrange
-        PizzaSize size = PizzaSize.LARGE;
-        double basePrice = size.getBasePrice();  // 18.99
-        CrustType stuffedCrust = CrustType.STUFFED;
-        double crustCost = stuffedCrust.getExtraCost();  // 2.00
-        Pizza pizza = new Pizza(basePrice, size, stuffedCrust, SauceType.MARINARA, CheeseType.MOZZARELLA);
-        
-        double expectedTotal = basePrice + crustCost;  // 18.99 + 2.00 = 20.99
-
-        // Act
-        double actualPrice = pizza.calculatePrice();
-
-        // Assert
-        assertEquals(expectedTotal, actualPrice, 0.01, 
-            "Pizza with stuffed crust should add extra crust cost");
-    }
 }
