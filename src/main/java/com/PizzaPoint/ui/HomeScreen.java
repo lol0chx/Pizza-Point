@@ -6,9 +6,15 @@ public class HomeScreen {
     public void startHome() {
         boolean running = true;
         while (running) {
-            System.out.println("🍕 PIZZAPOINT 🍕");
-            System.out.println("1: 🛒 New Order");
-            System.out.println("0: 🚪 Exit");
+            System.out.println("\n");
+            System.out.println("═══════════════════════════════════════");
+            System.out.println("        🍕  PIZZAPOINT  🍕");
+            System.out.println("    Your Favorite Pizza Destination!");
+            System.out.println("═══════════════════════════════════════");
+            System.out.println();
+            System.out.println("  1: 🛒  New Order");
+            System.out.println("  0: 🚪  Exit");
+            System.out.println();
             int choice = InputHandler.getIntInput("Choose an option: ", 0, 1);
             switch (choice) {
                 case 1 -> {
@@ -16,7 +22,8 @@ public class HomeScreen {
                     new NewOrderScreen(order).startOrder();
                 }
                 case 0 -> {
-                    System.out.println("Thank you! 🍕 See you soon! 👋");
+                    System.out.println("\n  Thank you for visiting! 🍕");
+                    System.out.println("  See you soon! 👋\n");
                     running = false;
                 }
             }

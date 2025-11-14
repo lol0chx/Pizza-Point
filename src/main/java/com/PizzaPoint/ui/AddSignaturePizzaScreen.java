@@ -26,12 +26,18 @@ public class AddSignaturePizzaScreen {
         // Show signature pizzas
         List<String> names = SignaturePizzaMenu.getSignaturePizzaNames();
         
-        System.out.println("\n--- Signature Pizzas ---");
+        System.out.println("\n═══════════════════════════════════════════════════════");
+        System.out.println("          ⭐ SIGNATURE PIZZAS ⭐");
+        System.out.println("═══════════════════════════════════════════════════════\n");
+        
         for (int i = 0; i < names.size(); i++) {
             String name = names.get(i);
-            System.out.printf("%d: %s - %s\n", i + 1, name, SignaturePizzaMenu.getDescription(name));
+            String description = SignaturePizzaMenu.getDescription(name);
+            System.out.printf("  [%d] 🍕 %s\n", i + 1, name);
+            System.out.printf("      %s\n\n", description);
         }
         
+        System.out.println("═══════════════════════════════════════════════════════");
         int choice = InputHandler.getIntInput("Choose signature pizza: ", 1, names.size());
         String selectedName = names.get(choice - 1);
         
@@ -60,7 +66,7 @@ public class AddSignaturePizzaScreen {
         boolean done = false;
         
         while (!done) {
-            System.out.println("\n--- Customize " + pizza.getName() + " ---");
+            System.out.println("\n🔧 --- Customize " + pizza.getName() + " ---");
             System.out.println("\nCrust: " + pizza.getCrust());
             System.out.println("Sauce: " + pizza.getSauce());
             System.out.println("Current toppings:");
@@ -105,7 +111,7 @@ public class AddSignaturePizzaScreen {
 
     private void removeToppingsFromSignature(SignaturePizza pizza) {
         if (pizza.getToppingsMap().isEmpty()) {
-            System.out.println("No toppings to remove!");
+            System.out.println("❌ No toppings to remove!");
             return;
         }
         
@@ -115,11 +121,11 @@ public class AddSignaturePizzaScreen {
             List<ToppingOption> currentToppings = new ArrayList<>(pizza.getToppingsMap().keySet());
             
             if (currentToppings.isEmpty()) {
-                System.out.println("All toppings removed!");
+                System.out.println("✅ All toppings removed!");
                 break;
             }
             
-            System.out.println("\n--- Remove Toppings ---");
+            System.out.println("\n🗑️ --- Remove Toppings ---");
             for (int i = 0; i < currentToppings.size(); i++) {
                 ToppingOption topping = currentToppings.get(i);
                 int count = pizza.getToppingsMap().get(topping);

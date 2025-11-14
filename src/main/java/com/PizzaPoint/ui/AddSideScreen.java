@@ -26,7 +26,7 @@ public class AddSideScreen {
         if (choice > 0) {
             Side selected = allSides.get(choice - 1);
             pizza.addSide(selected);
-            System.out.println( selected.getName() + " added!");
+            System.out.println("✅ " + selected.getName() + " added!");
         }
     }
 }

@@ -19,7 +19,7 @@ public class NewOrderScreen {
         boolean ordering = true;
         while (ordering) {
             System.out.println("""
-                                    ---- new order----:
+                                    🛒 ---- New Order ----:
                                     1: Add Custom Pizza
                                     2: Add Signature Pizza
                                     3: Add drink
@@ -37,7 +37,7 @@ public class NewOrderScreen {
                 case 4 -> new AddGarlicKnotsScreen(order).start();
                 case 5 -> {
                     if (order.getItems().isEmpty()) {
-                        System.out.println("Your order is empty please add to your order");
+                        System.out.println("🛒 Your order is empty please add to your order");
                     } else {
                         System.out.println(new Receipt(order).generate());
                         int removeChoice = InputHandler.getIntInput("Do you want to remove any item? \n1: Yes \n2: No\n", 1, 2);
@@ -65,7 +65,7 @@ public class NewOrderScreen {
     }
     
     private void removeItemFromOrder() {
-        System.out.println("\n--- Remove item number?---");
+        System.out.println("\n🗑️ --- Remove item number? ---");
         for (int i = 0; i < order.getItems().size(); i++) {
             var item = order.getItems().get(i);
             System.out.println( "Item Number " + "[" + (i + 1) + "]");

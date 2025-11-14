@@ -41,12 +41,12 @@ public class CheckOutScreen {
         change = 0;
         
         if (order.getItems().isEmpty()) {
-            System.out.println("Your order is empty ");
+            System.out.println("🛒 Your order is empty ");
             return false;
         }
 
         Receipt receipt = new Receipt(order);
-        System.out.println("=======Receipt Preview========");
+        System.out.println("📄 ======= Receipt Preview ========");
         System.out.println(receipt.generate());
         //get total of the order
         double total = order.getItems().stream()
@@ -74,7 +74,7 @@ public class CheckOutScreen {
 
     private boolean completeCheckout(Receipt receipt) {
         receiptId = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss"));
-        System.out.println("Checkout Complete");
+        System.out.println("✅ Checkout Complete");
         receipt.saveToFile(receiptId);
         order.clear();
         return true;
@@ -84,7 +84,7 @@ public class CheckOutScreen {
         tendered = 0;
         change = 0;
         
-        System.out.println("\n--- Card Payment ---");
+        System.out.println("\n💳 --- Card Payment ---");
         System.out.printf("Total amount: $%.2f%n", total);
 
         // Get card number (16 digits)
@@ -131,14 +131,14 @@ public class CheckOutScreen {
         // (show last 4 digits only)
         String maskedCard = "**** **** **** " + cardNumber.substring(12);
 
-        System.out.println("Card ending in " + cardNumber.substring(12) + " charged $" + String.format("%.2f", total));
-        receipt.addNote(String.format("\nPaid by card: %s, \nCardholder: %s", maskedCard, cardholderName));
+        System.out.println("✅ Card ending in " + cardNumber.substring(12) + " charged $" + String.format("%.2f", total));
+        receipt.addNote(String.format("Paid by card: %s, Cardholder: %s", maskedCard, cardholderName));
     }
     private void handleCashPayment(double total, Receipt receipt) {
          tendered = InputHandler.getDoubleInput(
                 String.format("Total is $%.2f. Enter cash amount: \n", total));
         if (tendered < total) {
-            System.out.println("Amount is less than total. Please enter again.");
+            System.out.println("❌ Amount is less than total. Please enter again.");
             handleCashPayment(total, receipt);
             return;
         }

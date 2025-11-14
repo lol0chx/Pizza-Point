@@ -20,7 +20,7 @@ public class AddDrinkScreen {
         String drinkName = chooseDrink();
         Drink drink = new Drink(drinkName,size);
         order.addItem(drink);
-        System.out.println("Your Drink is Added");
+        System.out.println("✅ Your Drink is Added");
 
     }
     public AddDrinkScreen(Order order) {

@@ -18,7 +18,6 @@ import java.util.Map;
 
 public class Receipt {
     private final Order order;
-    private String itemName;
     private final List<String> notes = new ArrayList<>();
 
     public Receipt (Order order) {
@@ -27,17 +26,28 @@ public class Receipt {
 
     // Generates formatted receipt text with header, items, and footer
     public String generate() {
+        return generate(false);
+    }
+    
+    // Generates formatted receipt text with optional thank you message
+    public String generate(boolean includeThanks) {
         int itemNumber = 1;
         StringBuilder receipt = new StringBuilder();
-        receipt.append("--------------------\n");
+        
         // Add customer name or just set it to guest
         String customerName = order.getCustomerName();
-        String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("'Date:' yyyy-MM-dd 'Time:' HH-mm-ss"));
+        String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        
+        receipt.append("\n");
+        receipt.append("═══════════════════════════════════════\n");
+        receipt.append("          🍕 PIZZAPOINT 🍕\n");
+        receipt.append("═══════════════════════════════════════\n\n");
+        
         if (customerName != null && !customerName.isBlank()) {
-            receipt.append("Date and Time: ").append(dateTime);
-            receipt.append("\nCustomer: ").append(customerName).append("\n");
-            receipt.append("Order #: ").append(order.getItems().size()).append(" item(s)\n");
-            receipt.append("--------------------\n");
+            receipt.append("  Customer: ").append(customerName).append("\n");
+            receipt.append("  Date: ").append(dateTime).append("\n");
+            receipt.append("  Items: ").append(order.getItems().size()).append("\n");
+            receipt.append("\n═══════════════════════════════════════\n");
         }
 
         // Iterate through all items and format each type
@@ -45,40 +55,35 @@ public class Receipt {
         for (Orderable item : items) {
             // Format pizza with size, crust, toppings, and sides
             if (item instanceof Pizza pizza) {
-                itemName = "pizza";
-                receipt.append("\n[").append(itemNumber++).append("] ").append(pizza.getName());
-                receipt.append("\nSize: ").append(pizza.getSize()).append(" $").append(pizza.getBasePrice()).append("\n");
-                receipt.append("Crust: ").append(pizza.getCrust());
+                receipt.append("\n  🍕 [").append(itemNumber++).append("] ").append(pizza.getName()).append("\n");
+                receipt.append("     Size: ").append(pizza.getSize()).append(" - $").append(String.format("%.2f", pizza.getBasePrice())).append("\n");
+                receipt.append("     Crust: ").append(pizza.getCrust());
                 if (pizza.getCrust().getExtraCost() > 0) {
                     receipt.append(String.format(" (+$%.2f)", pizza.getCrust().getExtraCost()));
                 }
-                receipt.append("\nBase Sauce: ").append(pizza.getSauce()).append("\n");
-                receipt.append("Cheese type: ").append(pizza.getCheese()).append("\n");
+                receipt.append("\n     Sauce: ").append(pizza.getSauce()).append("\n");
+                receipt.append("     Cheese: ").append(pizza.getCheese()).append("\n");
                 Map<ToppingOption, Integer> toppings = pizza.getToppingsMap();
                 if (toppings.isEmpty()) {
-                    receipt.append("Toppings: None\n");
+                    receipt.append("     Toppings: None\n");
                 } else {
-                    receipt.append("Toppings: ");
+                    receipt.append("     Toppings:\n");
                     // Apply size multiplier to topping prices
                     PizzaSize size = pizza.getSize();
                     double multiplier = size != null ? size.getToppingMultiplier() : 1.0;
                     toppings.forEach((topping, count) -> {
                         double adjustedPrice = topping.getPrice() * multiplier;
-                        receipt.append(topping.getName())
+                        receipt.append("       • ").append(topping.getName())
                                 .append(" ($").append(String.format("%.2f", adjustedPrice));
                         if (count > 1) {
                             receipt.append(" x").append(count);
                         }
-                        receipt.append(")");
-                        receipt.append(", ");
+                        receipt.append(")\n");
                     });
-                    // Remove last comma
-                    receipt.setLength(receipt.length() - 2);
-                    receipt.append("\n");
                 }
                 // Display sides if any
                 if (!pizza.getSides().isEmpty()) {
-                    receipt.append("Sides: ");
+                    receipt.append("     Sides: ");
                     for (int i = 0; i < pizza.getSides().size(); i++) {
                         receipt.append(pizza.getSides().get(i).getName());
                         if (i < pizza.getSides().size() - 1) {
@@ -88,35 +93,42 @@ public class Receipt {
                     receipt.append("\n");
                 }
                 
-                receipt.append(itemName).append(" Total: $").append(String.format("%.2f", pizza.calculatePrice()  )).append("\n-----------------------");
+                receipt.append("     ───────────────────\n");
+                receipt.append("     Total: $").append(String.format("%.2f", pizza.calculatePrice())).append("\n");
             }
             else if (item instanceof Drink drink) {
-                receipt.append("\n[").append(itemNumber++).append("] ").append(drink.getName()).append(" ");
-                receipt.append(drink.getSize()).append(" ");
-               receipt.append(drink.calculatePrice()).append("\n");
-               receipt.append("------------------------------");
-                itemName = "Drink";
+                receipt.append("\n  🥤 [").append(itemNumber++).append("] ").append(drink.getName()).append("\n");
+                receipt.append("     Size: ").append(drink.getSize()).append("\n");
+                receipt.append("     Total: $").append(String.format("%.2f", drink.calculatePrice())).append("\n");
             }
             else if (item instanceof GarlicKnots garlicKnots) {
-                receipt.append("\n[").append(itemNumber++).append("] ").append(garlicKnots.getName());
-                receipt.append(" - $").append(String.format("%.2f", garlicKnots.calculatePrice())).append("\n");
-                receipt.append("------------------------------");
+                receipt.append("\n  🧄 [").append(itemNumber++).append("] ").append(garlicKnots.getName()).append("\n");
+                receipt.append("     Total: $").append(String.format("%.2f", garlicKnots.calculatePrice())).append("\n");
             }
         }
 
         // Calculate and display total
         double total = PriceCalculator.calculateTotal(items);
-        receipt.append("\n");
-        receipt.append(" Sub Total: $").append(String.format("%.2f", total)).append("\n");
+        receipt.append("\n═══════════════════════════════════════\n");
+        receipt.append("  SUBTOTAL: $").append(String.format("%.2f", total)).append("\n");
 
         // Add cash payment details if applicable
         if(CheckOutScreen.getTendered() > 0) {
-            receipt.append("customer paid Cash: ").append(CheckOutScreen.getTendered());
-            receipt.append("\nChange: ").append(CheckOutScreen.getChange());
+            receipt.append("  Cash Tendered: $").append(String.format("%.2f", CheckOutScreen.getTendered())).append("\n");
+            receipt.append("  Change: $").append(String.format("%.2f", CheckOutScreen.getChange())).append("\n");
         }
 
         if (!notes.isEmpty()) {
-            notes.forEach(entry -> receipt.append("- ").append(entry).append("\n"));
+            receipt.append("\n");
+            notes.forEach(entry -> receipt.append("  ").append(entry).append("\n"));
+        }
+        
+        if (includeThanks) {
+            receipt.append("═══════════════════════════════════════\n");
+            receipt.append("     Thank you for your order! 🍕\n");
+            receipt.append("═══════════════════════════════════════\n");
+        } else {
+            receipt.append("═══════════════════════════════════════\n");
         }
 
         return receipt.toString();
@@ -132,10 +144,10 @@ public class Receipt {
 
     // Saves receipt to file in receipts directory
     public void saveToFile(String filename) {
-        String content = generate();
+        String content = generate(true); // Include thank you message when saving
         try (FileWriter writer = new FileWriter("receipts/" + filename)) {
             writer.write(content);
-            System.out.println("Receipt saved");
+            System.out.println("Receipt saved\n\n\n\n\n\n\n\n\n\n\n");
         } catch (IOException e) {
             System.err.println("Failed to save receipt: " + e.getMessage());
         }
