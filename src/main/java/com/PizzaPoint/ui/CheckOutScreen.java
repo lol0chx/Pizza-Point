@@ -35,6 +35,7 @@ public class CheckOutScreen {
         this.order = order;
     }
 
+    // Main checkout flow: preview receipt, collect payment, save order
     public boolean checkOut() {
         // Reset static variables from previous transactions
         tendered = 0;
@@ -72,6 +73,7 @@ public class CheckOutScreen {
         }
     }
 
+    // Finalizes order: generates receipt ID, saves file, and clears cart
     private boolean completeCheckout(Receipt receipt) {
         receiptId = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss"));
         System.out.println("✅ Checkout Complete");
@@ -79,6 +81,7 @@ public class CheckOutScreen {
         order.clear();
         return true;
     }
+    // Processes card payment and collects card details
     private void handleCardPayment(double total, Receipt receipt) {
         // Reset cash payment variables for card transactions
         tendered = 0;

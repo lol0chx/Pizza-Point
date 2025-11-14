@@ -11,41 +11,37 @@ public class Customization<T> implements Customizable<T> {
     private boolean singleChoice;
 
 
-    // default is false for toppings or other like topping
+    // Default constructor allows multiple items (for toppings)
     public Customization() {
-
         this(false);
     }
 
-    //allow specifying single choice for things like crust and size
-    public Customization( boolean singleChoice) {
-
+    // Constructor with single-choice mode for unique attributes like size or crust
+    public Customization(boolean singleChoice) {
         this.singleChoice = singleChoice;
     }
 
-    // use this for any option topping, size, crust type or any
+    // Adds option: replaces if single-choice, increments count if multiple allowed
     @Override
     public void add(T option) {
         if (singleChoice) {
-            options.clear();    //replace option if only one is allowed
+            options.clear();
             options.put(option, 1);
         } else {
             options.put(option, options.getOrDefault(option, 0) + 1);
         }
-
     }
-    //to remove any option
+    // Decrements option count or removes entirely if count is 1
     @Override
     public void remove(T option) {
-        if (!options.containsKey(option)) return; // if option doesnt exist just leave
-        int count = options.get(option); //get count of option
-        if (count <= 1) options.remove(option); //if there is only 1 option remove that
-        else options.put(option, count -1);  //if option is multiple(cheese x3) remove 1 cheese at a time
+        if (!options.containsKey(option)) return;
+        int count = options.get(option);
+        if (count <= 1) options.remove(option);
+        else options.put(option, count - 1);
     }
 
-    // Get count of a specific option
+    // Returns quantity of specific option
     public int getCount(T option) {
-
         return options.getOrDefault(option, 0);
     }
 

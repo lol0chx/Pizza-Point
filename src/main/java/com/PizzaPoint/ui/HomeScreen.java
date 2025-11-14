@@ -1,6 +1,8 @@
 package com.PizzaPoint.ui;
+
 import com.PizzaPoint.orders.Order;
 import com.PizzaPoint.services.InputHandler;
+
 public class HomeScreen {
 
     public void startHome() {
@@ -27,7 +29,7 @@ public class HomeScreen {
                     running = false;
                 }
             }
-
         }
     }
 }
+

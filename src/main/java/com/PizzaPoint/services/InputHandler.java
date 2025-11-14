@@ -23,6 +23,7 @@ public class InputHandler {
         }
     }
 
+    // Validates and returns a 3-digit CVV code
     public static String getCVVInput(String prompt) {
         while (true) {
             System.out.print(prompt);
@@ -34,6 +35,7 @@ public class InputHandler {
         }
     }
 
+    // Gets alphabetic string input with spaces allowed
     public static String getStringInput(String prompt) {
         while (true) {
             System.out.print(prompt);
@@ -44,6 +46,7 @@ public class InputHandler {
             System.out.println("Please enter a valid Input.");
         }
     }
+    // Validates and returns a 16-digit card number
     public static String getCardNumberInput(String prompt) {
         while (true) {
             System.out.print(prompt);
@@ -56,7 +59,7 @@ public class InputHandler {
         }
     }
 
-    // Get a choice from a list of options
+    // Displays list and returns selected option
     public static <T> T getListInput(String prompt, List<T> options) {
         for (int i = 0; i < options.size(); i++) {
             System.out.println((i + 1) + ". " + options.get(i));
@@ -65,7 +68,7 @@ public class InputHandler {
         return options.get(choice - 1);
     }
 
-    // Get any double input
+    // Validates and returns double value from user input
     public static double getDoubleInput(String prompt) {
         while (true) {
             System.out.print(prompt);

@@ -17,6 +17,7 @@ public class ToppingSelector {
     public void removeTopping(ToppingOption topping) {
         pizza.remove(topping);
     }
+    // Adds all toppings from list to pizza
     public void addMultiple(List<ToppingOption> toppings) {
         toppings.forEach(this::addTopping);
     }

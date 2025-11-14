@@ -13,6 +13,7 @@ import java.util.List;
 
 public class PizzaCustomizer {
     
+    // Prompts user to select pizza size
     public static PizzaSize chooseSize() {
         String prompt = """
                 select size:
@@ -28,6 +29,7 @@ public class PizzaCustomizer {
         };
     }
     
+    // Guides user through topping selection by category with size-adjusted pricing
     public static List<ToppingOption> chooseToppings(PizzaSize pizzaSize) {
         List<ToppingOption> selected = new ArrayList<>();
         List<ToppingOption> allToppings = new ArrayList<>(ToppingMenu.getAllToppings().values());

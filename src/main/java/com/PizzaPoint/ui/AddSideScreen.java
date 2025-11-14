@@ -13,7 +13,8 @@ public class AddSideScreen {
     
     public AddSideScreen(Pizza pizza) {
         this.pizza = pizza;
-    }    public void start() {
+    }    // Displays available sides and adds selected one to pizza
+    public void start() {
         List<Side> allSides = new ArrayList<>(SideMenu.getAllSides().values());
         System.out.println("\n--- Select Sides (Free) ---");
 

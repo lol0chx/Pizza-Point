@@ -11,6 +11,7 @@ public class AddGarlicKnotsScreen {
         this.order = order;
     }
 
+    // Prompts user to add garlic knots to their order
     public void start() {
         System.out.println("\n--- Garlic Knots ($5.00) ---");
         int confirm = InputHandler.getIntInput("Add Garlic Knots to order? 1. Yes  2. No\n", 1, 2);

@@ -9,7 +9,7 @@ import com.PizzaPoint.menu.pizza.Pizza;
 public class PizzaBuilder {
     private final Pizza pizza;
 
-    // name is custom pizza by default
+    // Initializes pizza with base attributes for building
     public PizzaBuilder(double basePrice, PizzaSize size, CrustType crust, SauceType sauce, CheeseType cheese) {
         pizza = new Pizza(basePrice, size, crust, sauce, cheese);
     }
@@ -24,6 +24,7 @@ public class PizzaBuilder {
         return this;
     }
 
+    // Returns the constructed pizza
     public Pizza build() {
         return pizza;
     }

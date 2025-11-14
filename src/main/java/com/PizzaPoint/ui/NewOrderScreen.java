@@ -11,8 +11,8 @@ public class NewOrderScreen {
     public NewOrderScreen(Order order) {
         this.order = order;
     }
+    // Main order menu loop for adding items and managing the cart
     public void startOrder() {
-
         String orderName = InputHandler.getStringInput("Enter name for the order: ");
         order.setCustomerName(orderName);
 
@@ -64,11 +64,11 @@ public class NewOrderScreen {
         }
     }
     
+    // Displays items and allows user to remove one by number
     private void removeItemFromOrder() {
         System.out.println("\n🗑️ --- Remove item number? ---");
         for (int i = 0; i < order.getItems().size(); i++) {
-            var item = order.getItems().get(i);
-            System.out.println( "Item Number " + "[" + (i + 1) + "]");
+            System.out.println("Item Number " + "[" + (i + 1) + "]");
         }
         
         int choice = InputHandler.getIntInput("Select item to remove (0 to cancel): ", 0, order.getItems().size());

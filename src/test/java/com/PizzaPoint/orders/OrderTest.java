@@ -4,7 +4,6 @@ import com.PizzaPoint.core.enums.CheeseType;
 import com.PizzaPoint.core.enums.CrustType;
 import com.PizzaPoint.core.enums.PizzaSize;
 import com.PizzaPoint.core.enums.SauceType;
-import com.PizzaPoint.menu.GarlicKnots;
 import com.PizzaPoint.menu.pizza.Pizza;
 import org.junit.jupiter.api.Test;
 

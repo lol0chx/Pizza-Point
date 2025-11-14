@@ -37,6 +37,7 @@ public class Pizza extends MenuItem implements Customizable<ToppingOption> {
         cheese.add(initialCheese);
     }
 
+    // Replaces current sauce with new selection
     public void setSauce(SauceType sauce) {
         this.sauce.clear();
         this.sauce.add(sauce);
@@ -45,6 +46,7 @@ public class Pizza extends MenuItem implements Customizable<ToppingOption> {
         return this.sauce.getAll().keySet().stream().findFirst().orElse(null);
     }
 
+    // Replaces current cheese with new selection
     public void setCheese(CheeseType cheese) {
         this.cheese.clear();
         this.cheese.add(cheese);
@@ -63,22 +65,18 @@ public class Pizza extends MenuItem implements Customizable<ToppingOption> {
         crust.add(newCrust);
     }
     public CrustType getCrust() {
-
         return crust.getAll().keySet().stream().findFirst().orElse(null);
     }
     public PizzaSize getSize() {
-
         return size.getAll().keySet().stream().findFirst().orElse(null);
     }
 
-    // getAll() returns an unmodifiable copy for receipt
+    // Returns unmodifiable topping map for receipt display
     public Map<ToppingOption, Integer> getToppingsMap() {
-
         return toppings.getAll();
     }
-    // use for calculation
+    // Returns mutable customization object for price calculation
     public Customization<ToppingOption> getToppings() {
-
         return toppings;
     }
     
@@ -91,12 +89,10 @@ public class Pizza extends MenuItem implements Customizable<ToppingOption> {
     }
     @Override
     public void add(ToppingOption topping) {
-
         toppings.add(topping);
     }
     @Override
     public void remove(ToppingOption topping) {
-
         toppings.remove(topping);
     }
     @Override
@@ -109,6 +105,7 @@ public class Pizza extends MenuItem implements Customizable<ToppingOption> {
                 " - Toppings: " + toppings.display()  + getToppingMultiplier(currentSize);
     }
 
+    // Calculates total price: base + crust + toppings with size multipliers
     @Override
     public double calculatePrice() {
         double price = 0.0;
@@ -128,6 +125,7 @@ public class Pizza extends MenuItem implements Customizable<ToppingOption> {
         return price;
     }
 
+    // Returns price multiplier based on pizza size
     private double getToppingMultiplier(PizzaSize size) {
         if (size == null) {
             return 1.0;

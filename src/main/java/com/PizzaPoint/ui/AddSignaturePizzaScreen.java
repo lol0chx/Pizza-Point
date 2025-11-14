@@ -22,8 +22,8 @@ public class AddSignaturePizzaScreen {
         this.order = order;
     }
 
+    // Displays signature pizzas and handles selection, customization, and sides
     public void start() {
-        // Show signature pizzas
         List<String> names = SignaturePizzaMenu.getSignaturePizzaNames();
         
         System.out.println("\n═══════════════════════════════════════════════════════");
@@ -62,6 +62,7 @@ public class AddSignaturePizzaScreen {
         System.out.println("✅ " + pizza.getName() + " added!");
     }
 
+    // Allows user to modify crust, sauce, and toppings of signature pizza
     private void customizeSignaturePizza(SignaturePizza pizza) {
         boolean done = false;
         

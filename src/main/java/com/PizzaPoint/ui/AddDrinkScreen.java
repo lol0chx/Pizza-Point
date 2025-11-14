@@ -13,9 +13,9 @@ public class AddDrinkScreen {
     private final Order order;
     //declare outside to use on methods so i can display price of topping based on size
     DrinkSize size;
+    // Prompts user to select drink size and type, then adds to order
     public void start() {
         System.out.println("Choose your Drink Size");
-        //choose size and crust
         size = chooseSize();
         String drinkName = chooseDrink();
         Drink drink = new Drink(drinkName,size);
@@ -28,6 +28,7 @@ public class AddDrinkScreen {
         this.order = order;
     }
 
+    // Displays available drinks and returns user selection
     private String chooseDrink() {
         List<String> drinks = DrinkMenu.DRINKS;
         System.out.println("Pick a drink");
@@ -37,6 +38,7 @@ public class AddDrinkScreen {
         int choice = InputHandler.getIntInput("Your choice: ", 1,drinks.size());
         return drinks.get(choice -1);
     }
+    // Returns selected drink size based on user input
     private DrinkSize chooseSize() {
         String prompt = """
                 select size:

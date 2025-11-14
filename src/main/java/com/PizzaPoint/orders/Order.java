@@ -17,22 +17,22 @@ public class Order {
         this.customerName = customerName;
     }
 
+    // Adds a new item to the order
     public void addItem(Orderable item) {
-
         items.add(item);
     }
 
+    // Removes an item from the order
     public void removeItem(Orderable item) {
-
         items.remove(item);
     }
 
-   //get all items in order
+    // Returns all items in the order
     public List<Orderable> getItems() {
         return items;
     }
 
-    //clear all orders
+     // Clears all items from the order
     public void clear() {
         items.clear();
     }

@@ -21,9 +21,9 @@ public class AddPizzaScreen {
         this.order = order;
     }
 
+    // Guides user through custom pizza creation with size, toppings, and sides
     public void buildCustomPizza() {
         System.out.println("\n🍕 Build your pizza!");
-        //choose size and crust
         size = PizzaCustomizer.chooseSize();
         CrustType crust = PizzaCustomizer.chooseCrust(size);
         SauceType sauce = PizzaCustomizer.chooseSauce();
