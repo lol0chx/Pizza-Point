@@ -23,17 +23,19 @@ public class NewOrderScreen {
                                     1: Add Custom Pizza
                                     2: Add Signature Pizza
                                     3: Add drink
-                                    4: View order
-                                    5: Checkout
-                                    6: Start new Order
+                                    4: Add Garlic Knots
+                                    5: View order
+                                    6: Checkout
+                                    7: Start new Order
                                     0: Back to home
                                    """);
-            int selection = InputHandler.getIntInput("Choose an option: ", 0, 6);
+            int selection = InputHandler.getIntInput("Choose an option: ", 0, 7);
             switch (selection) {
                 case 1 -> new AddPizzaScreen(order).buildCustomPizza();
                 case 2 -> new AddSignaturePizzaScreen(order).start();
                 case 3 -> new AddDrinkScreen(order).start();
-                case 4 -> {
+                case 4 -> new AddGarlicKnotsScreen(order).start();
+                case 5 -> {
                     if (order.getItems().isEmpty()) {
                         System.out.println("Your order is empty please add to your order");
                     } else {
@@ -44,7 +46,7 @@ public class NewOrderScreen {
                         }
                     }
                 }
-                case 5 -> {
+                case 6 -> {
                     boolean completed = new CheckOutScreen(order).checkOut();
                     if (completed) {
                         ordering = false;
@@ -52,7 +54,7 @@ public class NewOrderScreen {
 
 
                 }
-                case 6 -> {
+                case 7 -> {
                     order.clear();
                     orderName = InputHandler.getStringInput("Enter name for the order: ");
                     order.setCustomerName(orderName);

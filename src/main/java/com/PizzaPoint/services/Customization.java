@@ -1,4 +1,4 @@
-package com.PizzaPoint.core;
+package com.PizzaPoint.services;
 
 import com.PizzaPoint.core.interfaces.Customizable;
 

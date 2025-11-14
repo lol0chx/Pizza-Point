@@ -3,6 +3,7 @@ package com.PizzaPoint.orders;
 import com.PizzaPoint.core.enums.PizzaSize;
 import com.PizzaPoint.core.interfaces.Orderable;
 import com.PizzaPoint.menu.drink.Drink;
+import com.PizzaPoint.menu.GarlicKnots;
 import com.PizzaPoint.menu.pizza.Pizza;
 import com.PizzaPoint.menu.pizza.topping.ToppingOption;
 import com.PizzaPoint.ui.CheckOutScreen;
@@ -90,10 +91,13 @@ public class Receipt {
                 receipt.append(drink.getSize()).append(" ");
                receipt.append(drink.calculatePrice()).append("\n");
                receipt.append("------------------------------");
-               // receipt.append(itemName).append("(s) Total: $").append(String.format("%.2f", drink.calculatePrice()  )).append("\n\n");
                 itemName = "Drink";
             }
-            // Later: handle drinks, desserts, etc.
+            else if (item instanceof GarlicKnots garlicKnots) {
+                receipt.append("\n[").append(itemNumber++).append("] ").append(garlicKnots.getName());
+                receipt.append(" - $").append(String.format("%.2f", garlicKnots.calculatePrice())).append("\n");
+                receipt.append("------------------------------");
+            }
         }
 
         double total = PriceCalculator.calculateTotal(items);
