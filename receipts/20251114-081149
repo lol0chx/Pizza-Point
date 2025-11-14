@@ -1,0 +1,39 @@
+
+═══════════════════════════════════════
+          🍕 PIZZAPOINT 🍕
+═══════════════════════════════════════
+
+  Customer: Henok
+  Date: 2025-11-14 08:11:49
+  Items: 2
+
+═══════════════════════════════════════
+
+  🍕 [1] BBQ Chicken
+     Size: LARGE - $18.99
+     Crust: REGULAR
+     Sauce: BBQ
+     Cheese: CHEDDAR
+     Toppings:
+       • Onions ($1.00)
+       • Bell Peppers ($1.50)
+       • Chicken ($4.50)
+     ───────────────────
+     Total: $25.99
+
+  🍕 [2] Custom Pizza 
+     Size: MEDIUM - $14.99
+     Crust: STUFFED (+$2.00)
+     Sauce: ALFREDO
+     Cheese: VEGAN
+     Toppings: None
+     ───────────────────
+     Total: $16.99
+
+═══════════════════════════════════════
+  SUBTOTAL: $42.98
+  Cash Tendered: $50.00
+  Change: $7.02
+═══════════════════════════════════════
+     Thank you for your order! 🍕
+═══════════════════════════════════════

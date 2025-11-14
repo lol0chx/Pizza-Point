@@ -9,9 +9,11 @@ public enum DrinkSize {
     private final double price;
 
     DrinkSize(double price) {
+
         this.price = price;
     }
     public double getPrice() {
+
         return price;
     }
 }
