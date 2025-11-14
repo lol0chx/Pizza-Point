@@ -1,6 +1,6 @@
 package com.PizzaPoint.menu.pizza;
 
-import com.PizzaPoint.core.Customization;
+import com.PizzaPoint.services.Customization;
 import com.PizzaPoint.core.enums.CheeseType;
 import com.PizzaPoint.core.enums.CrustType;
 import com.PizzaPoint.core.enums.PizzaSize;

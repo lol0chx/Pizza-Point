@@ -1,7 +1,4 @@
 package com.PizzaPoint.core.enums;
-
-
-
 public enum  PizzaSize {
     //define all pizza sizes
     SMALL(8,10.99, 1.00),

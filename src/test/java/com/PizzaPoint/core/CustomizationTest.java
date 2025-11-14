@@ -1,6 +1,7 @@
 package com.PizzaPoint.core;
 
 import com.PizzaPoint.core.enums.CrustType;
+import com.PizzaPoint.services.Customization;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
