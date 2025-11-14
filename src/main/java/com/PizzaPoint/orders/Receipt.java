@@ -8,6 +8,7 @@ import com.PizzaPoint.menu.pizza.Pizza;
 import com.PizzaPoint.menu.pizza.topping.ToppingOption;
 import com.PizzaPoint.ui.CheckOutScreen;
 import com.PizzaPoint.services.PriceCalculator;
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -150,6 +151,27 @@ public class Receipt {
             System.out.println("Receipt saved\n\n\n\n\n\n\n\n\n\n\n");
         } catch (IOException e) {
             System.err.println("Failed to save receipt: " + e.getMessage());
+        }
+        
+        // Save transaction summary to transactions.txt
+        saveTransactionSummary(filename);
+    }
+    
+    // Appends transaction summary to transactions file
+    private void saveTransactionSummary(String receiptId) {
+        String customerName = order.getCustomerName() != null ? order.getCustomerName() : "Guest";
+        LocalDateTime now = LocalDateTime.now();
+        String date = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String time = now.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        double total = PriceCalculator.calculateTotal(order.getItems());
+        
+        String transactionLine = String.format("%s|%s|%s|%s|%.2f%n", 
+            receiptId, date, time, customerName, total);
+        
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("transactions.csv", true))) {
+            writer.write(transactionLine);
+        } catch (IOException e) {
+            System.err.println("Failed to save transaction: " + e.getMessage());
         }
     }
 

@@ -76,7 +76,22 @@ public class CheckOutScreen {
     // Finalizes order: generates receipt ID, saves file, and clears cart
     private boolean completeCheckout(Receipt receipt) {
         receiptId = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss"));
-        System.out.println("✅ Checkout Complete");
+        
+        // Display checkout summary on screen
+        System.out.println("\n═══════════════════════════════════════");
+        
+        // Show payment details if cash was used
+        if (tendered > 0) {
+            System.out.printf("  Cash Tendered: $%.2f%n", tendered);
+            System.out.printf("  Change: $%.2f%n", change);
+            System.out.println("═══════════════════════════════════════");
+        }
+        
+        System.out.println("     Thank you for your order! 🍕");
+        System.out.println("═══════════════════════════════════════");
+        System.out.println("     ✅ CHECKOUT COMPLETE ✅");
+        System.out.println("═══════════════════════════════════════");
+        
         receipt.saveToFile(receiptId);
         order.clear();
         return true;

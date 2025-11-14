@@ -1,0 +1,42 @@
+
+═══════════════════════════════════════
+          🍕 PIZZAPOINT 🍕
+═══════════════════════════════════════
+
+  Customer: Henok
+  Date: 2025-11-14 07:42:04
+  Items: 3
+
+═══════════════════════════════════════
+
+  🧄 [1] Garlic Knots
+     Total: $5.00
+
+  🍕 [2] Hawaiian
+     Size: SMALL - $10.99
+     Crust: REGULAR
+     Sauce: MARINARA
+     Cheese: MOZZARELLA
+     Toppings:
+       • Ham ($1.50)
+       • Pineapple ($1.00)
+     ───────────────────
+     Total: $13.49
+
+  🍕 [3] Custom Pizza 
+     Size: MEDIUM - $14.99
+     Crust: STUFFED (+$2.00)
+     Sauce: ALFREDO
+     Cheese: CHEDDAR
+     Toppings:
+       • Bacon ($3.00 x2)
+     ───────────────────
+     Total: $22.99
+
+═══════════════════════════════════════
+  SUBTOTAL: $41.48
+  Cash Tendered: $50.00
+  Change: $8.52
+═══════════════════════════════════════
+     Thank you for your order! 🍕
+═══════════════════════════════════════

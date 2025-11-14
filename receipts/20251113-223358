@@ -1,0 +1,26 @@
+--------------------
+Date and Time: Date: 2025-11-13 Time: 22-33-58
+Customer: birk
+Order #: 2 item(s)
+--------------------
+
+[1] Custom Pizza 
+Size: MEDIUM $14.99
+Crust: THIN
+Base Sauce: ALFREDO
+Cheese type: CHEDDAR
+Toppings: Extra Sauce ($1.50), Mushrooms ($1.50 x5), Extra Cheese ($3.00)
+Sides: Parmesan Packets
+pizza Total: $26.99
+-----------------------
+[2] Hawaiian
+Size: MEDIUM $14.99
+Crust: REGULAR
+Base Sauce: MARINARA
+Cheese type: MOZZARELLA
+Toppings: Pineapple ($1.50), Ham ($2.25), Salami ($2.63), Pepperoni ($2.25)
+pizza Total: $23.62
+-----------------------
+ Sub Total: $50.61
+customer paid Cash: 60.0
+Change: 9.394999999999996

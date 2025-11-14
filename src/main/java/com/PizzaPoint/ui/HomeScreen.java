@@ -15,13 +15,17 @@ public class HomeScreen {
             System.out.println("═══════════════════════════════════════");
             System.out.println();
             System.out.println("  1: 🛒  New Order");
+            System.out.println("  2: 📊  Ledger");
             System.out.println("  0: 🚪  Exit");
             System.out.println();
-            int choice = InputHandler.getIntInput("Choose an option: ", 0, 1);
+            int choice = InputHandler.getIntInput("Choose an option: ", 0, 2);
             switch (choice) {
                 case 1 -> {
                     Order order = new Order();
                     new NewOrderScreen(order).startOrder();
+                }
+                case 2 -> {
+                    new LedgerScreen().start();
                 }
                 case 0 -> {
                     System.out.println("\n  Thank you for visiting! 🍕");
